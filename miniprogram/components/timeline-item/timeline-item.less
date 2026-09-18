@@ -1,0 +1,133 @@
+@import '../../styles/variables.less';
+
+// 按压态在组件自身样式表中再声明一次，避免依赖全局样式的注入
+.press-class();
+
+.tl {
+  display: flex;
+  align-items: flex-start;
+  gap: @space-md;
+  padding: @space-md @space-lg;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1rpx solid var(--color-surface-border);
+  box-shadow: var(--shadow-soft);
+  transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+}
+
+.tl.is-done {
+  opacity: 0.62;
+}
+
+.tl.is-finished {
+  opacity: 0.78;
+}
+
+.tl__bar {
+  width: 8rpx;
+  align-self: stretch;
+  min-height: 60rpx;
+  border-radius: @radius-pill;
+  flex: none;
+}
+
+.tl__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.tl__row {
+  display: flex;
+  align-items: center;
+  gap: @space-xs;
+}
+
+.tl__title {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  font-weight: 600;
+  color: var(--color-text);
+  .ellipsis();
+}
+
+.tl.is-done .tl__title {
+  text-decoration: line-through;
+  color: var(--color-text-secondary);
+}
+
+.tl__status {
+  flex: none;
+  padding: 2rpx 12rpx;
+  border-radius: @radius-pill;
+  font-size: 20rpx;
+  line-height: 1.6;
+}
+
+.tl__status--ongoing {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.tl__status--finished {
+  background: var(--color-bg-soft);
+  color: var(--color-text-tertiary);
+}
+
+.tl__meta {
+  margin-top: 4rpx;
+  display: flex;
+  align-items: center;
+  gap: @space-2xs;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.tl__time {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.tl__sep {
+  flex: none;
+  color: var(--color-text-tertiary);
+}
+
+.tl__loc {
+  flex: 1;
+  min-width: 0;
+  .ellipsis();
+}
+
+.tl__sub {
+  margin-top: 2rpx;
+  font-size: @font-caption;
+  color: var(--color-text-tertiary);
+  .ellipsis();
+}
+
+.tl__check {
+  flex: none;
+  width: 48rpx;
+  height: 48rpx;
+  margin-top: 2rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .tappable();
+  transition: background-color @duration-fast @ease-standard, border-color @duration-fast @ease-standard,
+    transform @duration-fast @ease-standard;
+}
+
+.tl__check--pressed {
+  transform: scale(0.88);
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.tl__check.is-checked {
+  background: var(--color-success-strong);
+  border-color: var(--color-success-strong);
+}

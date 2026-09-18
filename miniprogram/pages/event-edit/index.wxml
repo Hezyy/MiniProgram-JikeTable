@@ -1,0 +1,194 @@
+<view class="page ee {{themeClass}}">
+  <view class="ee__card glass-panel">
+    <view class="ee__field">
+      <view class="ee__field-head">
+        <text class="ee__label">类型</text>
+      </view>
+      <segmented-control options="{{kindOptions}}" value="{{kind}}" bindchange="onKindChange" />
+      <text class="ee__hint">
+        {{kind === 'todo' ? '待办只需要开始时间，完成后可勾选。' : '普通日程需要明确的开始与结束时间。'}}
+      </text>
+    </view>
+
+    <view class="ee__field" id="field-title">
+      <view class="ee__field-head">
+        <text class="ee__label">标题<text class="ee__required">*</text></text>
+        <text class="ee__error" wx:if="{{errors.title}}">{{errors.title}}</text>
+        <text class="ee__counter" wx:else>{{titleLength}}/{{maxTitle}}</text>
+      </view>
+      <input
+        class="ee__input {{errors.title ? 'is-error' : ''}}"
+        value="{{title}}"
+        maxlength="{{maxTitle}}"
+        placeholder="例如：提交数据结构作业"
+        placeholder-class="ee__placeholder"
+        focus="{{focusField === 'title'}}"
+        bindinput="onTitleInput"
+        aria-label="标题"
+      />
+    </view>
+
+    <view class="ee__field" id="field-date">
+      <view class="ee__field-head">
+        <text class="ee__label">日期<text class="ee__required">*</text></text>
+        <text class="ee__error" wx:if="{{errors.date}}">{{errors.date}}</text>
+      </view>
+      <picker mode="date" value="{{date}}" bindchange="onDateChange">
+        <view
+          class="ee__picker {{errors.date ? 'is-error' : ''}}"
+          hover-class="jk-pressed"
+          hover-stay-time="100"
+        >
+          <text class="ee__picker-text">{{dateLabel}}</text>
+          <icon name="calendar" size="32" tone="default" />
+        </view>
+      </picker>
+    </view>
+
+    <view class="ee__field" id="field-time">
+      <view class="ee__field-head">
+        <text class="ee__label">时间<text class="ee__required">*</text></text>
+        <text class="ee__error" wx:if="{{errors.startTime || errors.endTime}}">
+          {{errors.startTime || errors.endTime}}
+        </text>
+      </view>
+      <view class="ee__row">
+        <picker
+          class="ee__row-item"
+          mode="time"
+          value="{{startTime}}"
+          bindchange="onStartTimeChange"
+        >
+          <view
+            class="ee__picker {{errors.startTime ? 'is-error' : ''}}"
+            hover-class="jk-pressed"
+            hover-stay-time="100"
+          >
+            <text class="ee__picker-text">开始 {{startTime}}</text>
+            <icon name="clock" size="32" tone="default" />
+          </view>
+        </picker>
+        <picker
+          wx:if="{{kind === 'event'}}"
+          class="ee__row-item"
+          mode="time"
+          value="{{endTime}}"
+          bindchange="onEndTimeChange"
+        >
+          <view
+            class="ee__picker {{errors.endTime ? 'is-error' : ''}}"
+            hover-class="jk-pressed"
+            hover-stay-time="100"
+          >
+            <text class="ee__picker-text">结束 {{endTime}}</text>
+            <icon name="clock" size="32" tone="default" />
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="ee__field" wx:if="{{kind === 'todo'}}">
+      <view class="ee__field-head">
+        <text class="ee__label">完成状态</text>
+      </view>
+      <view
+        class="ee__switch-row"
+        hover-class="jk-pressed"
+        hover-stay-time="60"
+        bindtap="onToggleCompleted"
+        aria-role="checkbox"
+        aria-checked="{{completed}}"
+        aria-label="标记为已完成"
+      >
+        <text class="ee__switch-text">{{completed ? '已完成' : '未完成'}}</text>
+        <view class="ee__check {{completed ? 'is-checked' : ''}}">
+          <icon wx:if="{{completed}}" name="check" size="30" tone="inverse" />
+        </view>
+      </view>
+    </view>
+
+    <view class="ee__field" id="field-location">
+      <view class="ee__field-head">
+        <text class="ee__label">地点</text>
+        <text class="ee__error" wx:if="{{errors.location}}">{{errors.location}}</text>
+      </view>
+      <input
+        class="ee__input {{errors.location ? 'is-error' : ''}}"
+        value="{{location}}"
+        maxlength="{{maxLocation}}"
+        placeholder="选填"
+        placeholder-class="ee__placeholder"
+        focus="{{focusField === 'location'}}"
+        bindinput="onLocationInput"
+        aria-label="地点"
+      />
+    </view>
+
+    <view class="ee__field" id="field-color">
+      <view class="ee__field-head">
+        <text class="ee__label">颜色<text class="ee__required">*</text></text>
+        <text class="ee__error" wx:if="{{errors.colorId}}">{{errors.colorId}}</text>
+        <text class="ee__counter" wx:else>{{selectedColorName}}</text>
+      </view>
+      <view class="ee__colors">
+        <view
+          wx:for="{{colors}}"
+          wx:key="id"
+          class="ee__color {{index === colorIndex ? 'is-selected' : ''}}"
+          style="background: {{item.bg}}; color: {{item.text}}; border-color: {{item.bar}};"
+          data-index="{{index}}"
+          bindtap="onSelectColor"
+          hover-class="jk-pressed"
+          hover-stay-time="60"
+          aria-role="radio"
+          aria-checked="{{index === colorIndex}}"
+          aria-label="{{item.name}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+
+    <view class="ee__field ee__field--last" id="field-note">
+      <view class="ee__field-head">
+        <text class="ee__label">备注</text>
+        <text class="ee__error" wx:if="{{errors.note}}">{{errors.note}}</text>
+        <text class="ee__counter" wx:else>{{noteLength}}/{{maxNote}}</text>
+      </view>
+      <textarea
+        class="ee__textarea {{errors.note ? 'is-error' : ''}}"
+        value="{{note}}"
+        maxlength="{{maxNote}}"
+        placeholder="选填"
+        placeholder-class="ee__placeholder"
+        auto-height
+        bindinput="onNoteInput"
+        aria-label="备注"
+      />
+    </view>
+  </view>
+
+  <view class="ee__spacer"></view>
+
+  <view class="ee__bar">
+    <button
+      wx:if="{{isEdit}}"
+      class="ee__bar-btn u-button u-button--danger"
+      hover-class="jk-pressed"
+      bindtap="onDelete"
+    >
+      删除
+    </button>
+    <button
+      class="ee__bar-btn ee__bar-btn--main u-button u-button--primary"
+      hover-class="jk-pressed"
+      loading="{{saving}}"
+      disabled="{{saving}}"
+      bindtap="onSave"
+    >
+      {{saving ? '保存中' : '保存'}}
+    </button>
+  </view>
+
+  <toast id="toast" />
+</view>

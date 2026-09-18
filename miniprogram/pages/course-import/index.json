@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "导入课表",
+  "usingComponents": {
+    "icon": "/components/icon/icon",
+    "segmented-control": "/components/segmented-control/segmented-control",
+    "empty-state": "/components/empty-state/empty-state",
+    "toast": "/components/toast/toast"
+  }
+}

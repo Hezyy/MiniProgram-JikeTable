@@ -1,0 +1,117 @@
+// 设计令牌的 Less 变量与混入。
+// 本文件只定义变量与混入，不产生任何 CSS 输出，可作为 Less 公共引用文件。
+
+// ---------- 间距 ----------
+@space-2xs: 4rpx;
+@space-xs: 8rpx;
+@space-sm: 12rpx;
+@space-md: 16rpx;
+@space-lg: 24rpx;
+@space-xl: 32rpx;
+@space-2xl: 48rpx;
+
+// 页面左右安全边距，规范要求 24rpx - 32rpx
+@space-page: 28rpx;
+
+// ---------- 圆角 ----------
+@radius-xs: 8rpx;
+@radius-sm: 12rpx;
+@radius-md: 20rpx;
+@radius-lg: 28rpx;
+@radius-pill: 999rpx;
+
+// ---------- 字号 ----------
+@font-caption: 24rpx;
+@font-body: 28rpx;
+@font-title: 32rpx;
+@font-heading: 40rpx;
+@font-display: 64rpx;
+
+// ---------- 尺寸 ----------
+@touch-size: 88rpx;
+@tabbar-height: 100rpx;
+
+// ---------- 动效 ----------
+@duration-fast: 120ms;
+@duration-base: 200ms;
+@duration-slow: 260ms;
+@ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+// ---------- 混入 ----------
+
+// 单行截断
+.ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 多行截断
+.clamp(@lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @lines;
+  overflow: hidden;
+}
+
+// 玻璃面板：有能力时模糊背景，无能力时依靠半透明底色、细边框与阴影保持层次
+.glass-surface(@blur: 20rpx) {
+  background: var(--color-surface);
+  border: 1rpx solid var(--color-surface-border);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(@blur) saturate(130%);
+  -webkit-backdrop-filter: blur(@blur) saturate(130%);
+}
+
+.glass-surface-strong(@blur: 28rpx) {
+  background: var(--color-surface-strong);
+  border: 1rpx solid var(--color-surface-border);
+  box-shadow: var(--shadow-strong);
+  backdrop-filter: blur(@blur) saturate(140%);
+  -webkit-backdrop-filter: blur(@blur) saturate(140%);
+}
+
+// 悬浮操作按钮
+.floating-action() {
+  position: fixed;
+  right: @space-xl;
+  bottom: calc(env(safe-area-inset-bottom) + 40rpx);
+  z-index: 30;
+}
+
+// 底部安全区内边距
+.safe-bottom(@extra: 0rpx) {
+  padding-bottom: calc(env(safe-area-inset-bottom) + @extra);
+}
+
+// 隐藏滚动条
+.hide-scrollbar() {
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+}
+
+// 按压反馈（配合 hover-class="jk-pressed"）。
+// 过渡写在按下态本身，这样任何可点击元素只要挂上该 class 就有动画，无需逐个改基础样式。
+.press-class() {
+  .jk-pressed {
+    transform: scale(0.97);
+    opacity: 0.9;
+    transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+  }
+}
+
+// 声明式过渡：需要在抬起时同样平滑恢复的基础样式可以调用它。
+.tappable() {
+  transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+}
+
+// 纯色小圆点，用于状态标识
+.dot(@size: 12rpx; @color: var(--color-primary)) {
+  width: @size;
+  height: @size;
+  border-radius: 50%;
+  background: @color;
+}

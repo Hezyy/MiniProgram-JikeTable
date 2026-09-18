@@ -1,0 +1,102 @@
+@import '../../styles/variables.less';
+
+// 首次初始化页：一屏内完成，表单放在圆角玻璃卡片里。
+
+.onboarding {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: @space-2xl 0 @space-2xl;
+}
+
+.onboarding__brand {
+  padding: 0 @space-2xs @space-xl;
+}
+
+.onboarding__title {
+  display: block;
+  font-size: @font-heading;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 2rpx;
+}
+
+.onboarding__subtitle {
+  display: block;
+  margin-top: @space-xs;
+  font-size: @font-body;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.onboarding__card {
+  padding: @space-lg;
+}
+
+.onboarding__actions {
+  display: flex;
+  flex-direction: column;
+  gap: @space-md;
+  margin-top: @space-2xl;
+}
+
+.onboarding__hint {
+  display: block;
+  margin-top: @space-lg;
+  font-size: @font-caption;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  line-height: 1.6;
+}
+
+// ---------- 表单字段 ----------
+
+.field + .field {
+  margin-top: @space-lg;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: @space-xs;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.field__input,
+.field__picker {
+  width: 100%;
+  min-height: @touch-size;
+  padding: 0 @space-md;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  font-size: @font-body;
+  color: var(--color-text);
+}
+
+.field__input {
+  height: @touch-size;
+}
+
+.field__picker {
+  display: flex;
+  align-items: center;
+  .tappable();
+}
+
+.field__placeholder {
+  color: var(--color-text-tertiary);
+  font-size: @font-body;
+}
+
+.field__error {
+  display: block;
+  margin-top: @space-2xs;
+  font-size: @font-caption;
+  color: var(--color-danger);
+}
+
+// 小程序 button 默认带一层边框伪元素，使用工具类按钮时需清除。
+button::after {
+  border: none;
+}

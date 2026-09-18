@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "设置",
+  "usingComponents": {
+    "icon": "/components/icon/icon",
+    "toast": "/components/toast/toast"
+  }
+}

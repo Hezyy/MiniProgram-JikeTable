@@ -1,0 +1,17 @@
+<view class="es">
+  <view class="es__art">
+    <icon name="{{icon}}" size="56" tone="primary" />
+  </view>
+  <view class="es__title" wx:if="{{title}}">{{title}}</view>
+  <view class="es__desc" wx:if="{{description}}">{{description}}</view>
+  <button
+    wx:if="{{actionText}}"
+    class="es__action"
+    hover-class="jk-pressed"
+    hover-stay-time="80"
+    bindtap="onAction"
+  >
+    {{actionText}}
+  </button>
+  <view class="es__hint" wx:if="{{hint}}">{{hint}}</view>
+</view>

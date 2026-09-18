@@ -1,0 +1,3 @@
+<view class="gp {{strong ? 'gp--strong' : ''}} {{padded ? 'gp--padded' : ''}} {{extClass}}">
+  <slot></slot>
+</view>

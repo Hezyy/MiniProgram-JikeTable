@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "今日",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "glass-panel": "/components/glass-panel/glass-panel",
+    "empty-state": "/components/empty-state/empty-state",
+    "timeline-item": "/components/timeline-item/timeline-item",
+    "bottom-sheet": "/components/bottom-sheet/bottom-sheet",
+    "toast": "/components/toast/toast",
+    "icon": "/components/icon/icon"
+  }
+}

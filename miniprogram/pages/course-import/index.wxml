@@ -1,0 +1,173 @@
+<view class="page ci {{themeClass}}">
+  <block wx:if="{{hasSemester}}">
+    <!-- 说明 -->
+    <view class="glass-panel ci__intro">
+      <text class="ci__intro-title">从教务系统导入课表</text>
+      <text class="ci__intro-text">在教务系统的课表页面框选整张课表（要包含「星期一…星期日」表头和节次列）并复制，粘贴到下面即可。解析全程在本机完成，<text class="ci__strong">不需要账号密码，也不会上传任何数据</text>。</text>
+
+      <view class="ci__steps">
+        <view class="ci__step">
+          <text class="ci__step-index">1</text>
+          <text class="ci__step-text">电脑或手机浏览器打开教务系统的课表页面</text>
+        </view>
+        <view class="ci__step">
+          <text class="ci__step-index">2</text>
+          <text class="ci__step-text">从「节次 / 星期一」一直框选到右下角最后一格，复制</text>
+        </view>
+        <view class="ci__step">
+          <text class="ci__step-index">3</text>
+          <text class="ci__step-text">回到这里粘贴并解析</text>
+        </view>
+      </view>
+
+      <view class="ci__tip">
+        <text class="ci__tip-title">用「按周次查询」页面时请注意</text>
+        <text class="ci__tip-text">该页面只显示所选周次有课的课程，只复制一周会漏掉其它周的课。请先把周次选成「全部」再复制；如果只能逐周查询，就把多周的表一起粘贴进来，解析器会按课程去重合并。</text>
+      </view>
+    </view>
+
+    <!-- 输入 -->
+    <view class="u-section">
+      <view class="u-section__title">粘贴课表文本</view>
+      <view class="glass-panel ci__card">
+        <textarea
+          class="ci__textarea"
+          value="{{inputText}}"
+          placeholder="在此粘贴课表文本"
+          placeholder-class="ci__placeholder"
+          maxlength="-1"
+          bindinput="onInput"
+          aria-label="从教务系统复制的课表文本"
+        ></textarea>
+
+        <view class="ci__actions">
+          <button
+            class="u-button u-button--primary ci__action"
+            hover-class="jk-pressed"
+            hover-stay-time="100"
+            bindtap="onParse"
+            aria-label="解析课表"
+          >
+            解析课表
+          </button>
+          <button
+            class="u-button u-button--ghost ci__action"
+            hover-class="jk-pressed"
+            hover-stay-time="100"
+            bindtap="onPasteFromClipboard"
+            aria-label="读取剪贴板中的课表文本"
+          >
+            读取剪贴板
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 解析结果 -->
+    <block wx:if="{{hasPreview}}">
+      <view class="u-section">
+        <view class="u-section__title">解析结果</view>
+        <view class="glass-panel ci__card">
+          <view class="ci__result-head">
+            <icon
+              name="{{previewOk ? 'check' : 'warning'}}"
+              size="32"
+              tone="{{previewOk ? 'success' : 'danger'}}"
+            />
+            <text class="ci__result-msg {{previewOk ? 'is-ok' : 'is-error'}}">{{previewMessage}}</text>
+          </view>
+
+          <view class="ci__warnings" wx:if="{{warnings.length > 0}}">
+            <view class="ci__warning" wx:for="{{warnings}}" wx:key="*this">
+              <icon name="warning" size="28" tone="warning" />
+              <text class="ci__warning-text">{{item}}</text>
+            </view>
+          </view>
+
+          <view class="ci__issues" wx:if="{{issues.length > 0}}">
+            <text class="ci__issues-title">以下内容没有识别成功，可对照原文修改后重新解析</text>
+            <view class="ci__issue" wx:for="{{issues}}" wx:key="key">
+              <text class="ci__issue-msg">{{item.message}}</text>
+              <text class="ci__issue-raw" wx:if="{{item.raw}}">{{item.raw}}</text>
+            </view>
+          </view>
+
+          <view class="ci__list" wx:if="{{items.length > 0}}">
+            <view
+              class="ci__item"
+              wx:for="{{items}}"
+              wx:key="key"
+              style="background: {{item.bg}}; color: {{item.text}}; border-left-color: {{item.bar}};"
+            >
+              <text class="ci__item-name">{{item.name}}</text>
+              <view class="ci__item-line">
+                <text class="ci__item-when">{{item.weekdayText}} {{item.sectionText}}</text>
+                <text class="ci__item-time" wx:if="{{item.timeText}}">{{item.timeText}}</text>
+              </view>
+              <view class="ci__item-line" wx:if="{{item.location || item.teacher}}">
+                <text class="ci__item-location" wx:if="{{item.location}}">{{item.location}}</text>
+                <text class="ci__item-teacher" wx:if="{{item.teacher}}">{{item.teacher}}</text>
+              </view>
+              <text class="ci__item-weeks">{{item.weeksText}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="u-section" wx:if="{{previewOk}}">
+        <view class="u-section__title">导入方式</view>
+        <view class="glass-panel ci__card">
+          <segmented-control options="{{modeOptions}}" value="{{mode}}" bindchange="onModeChange" />
+          <text class="ci__danger-hint" wx:if="{{mode === 'replace'}}">覆盖会删除当前所有课程，且无法撤销。</text>
+
+          <view class="ci__weeks" wx:if="{{suggestedTotalWeeks > currentTotalWeeks}}">
+            <text class="ci__weeks-text">课表最晚到第 {{maxWeek}} 周，当前学期只设置了 {{currentTotalWeeks}} 周</text>
+            <view
+              class="ci__check-row"
+              hover-class="jk-pressed"
+              hover-stay-time="100"
+              bindtap="onToggleExtend"
+              aria-role="checkbox"
+              aria-checked="{{extendTotalWeeks}}"
+              aria-label="同时把学期总周数改为 {{suggestedTotalWeeks}} 周"
+            >
+              <view class="ci__check {{extendTotalWeeks ? 'is-checked' : ''}}">
+                <icon wx:if="{{extendTotalWeeks}}" name="check" size="28" tone="inverse" />
+              </view>
+              <text class="ci__check-text">同时把学期总周数改为 {{suggestedTotalWeeks}} 周</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view class="ci__spacer"></view>
+  </block>
+
+  <view class="ci__empty" wx:else>
+    <empty-state
+      icon="calendar"
+      title="还没有设置学期"
+      description="先设置学期名称与开学日期，导入的课表才能排进周次。"
+      actionText="去设置"
+      bindaction="onGoSettings"
+    />
+  </view>
+
+  <view class="ci__bar" wx:if="{{hasSemester}}">
+    <button
+      class="u-button u-button--primary ci__bar-btn"
+      hover-class="jk-pressed"
+      hover-stay-time="100"
+      loading="{{busy}}"
+      disabled="{{busy || !canImport}}"
+      bindtap="onImport"
+      aria-label="导入 {{items.length}} 门课程"
+    >
+      <text wx:if="{{busy}}">正在导入…</text>
+      <text wx:else>导入 {{items.length}} 门课程</text>
+    </button>
+  </view>
+
+  <toast id="toast" />
+</view>

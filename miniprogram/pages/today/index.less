@@ -1,0 +1,267 @@
+@import '../../styles/variables.less';
+
+.today {
+  padding-bottom: 200rpx;
+}
+
+// ---------- 日期头部 ----------
+.hero {
+  margin-top: @space-lg;
+  padding: @space-xl;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: @space-lg;
+}
+
+.hero__date {
+  display: flex;
+  align-items: center;
+  gap: @space-md;
+  flex: none;
+}
+
+.hero__day {
+  font-size: 88rpx;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2rpx;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__date-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.hero__weekday {
+  font-size: @font-title;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.hero__month {
+  font-size: @font-caption;
+  line-height: 1.1;
+  color: var(--color-text-secondary);
+}
+
+.hero__term {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: @space-sm;
+}
+
+.hero__term-name {
+  max-width: 100%;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  text-align: right;
+  .ellipsis();
+}
+
+.hero__week {
+  flex: none;
+  padding: 6rpx @space-md;
+  border-radius: @radius-pill;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 22rpx;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.hero__week.is-muted {
+  background: var(--color-bg-soft);
+  color: var(--color-text-tertiary);
+}
+
+// ---------- 下一节课 ----------
+.next {
+  margin-top: @space-md;
+  padding: @space-xl;
+  display: flex;
+  align-items: center;
+  gap: @space-md;
+  overflow: hidden;
+  .tappable();
+}
+
+.next__bar {
+  flex: none;
+  align-self: stretch;
+  width: 8rpx;
+  border-radius: @radius-pill;
+}
+
+.next__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+}
+
+.next__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8rpx @space-xs;
+  min-width: 0;
+}
+
+.next__label {
+  flex: none;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.next__badge {
+  flex: none;
+  padding: 2rpx 14rpx;
+  border-radius: @radius-pill;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 20rpx;
+  line-height: 1.7;
+}
+
+.next__count {
+  flex: none;
+  margin-left: auto;
+  font-size: @font-caption;
+  font-weight: 600;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.next__count--live {
+  padding: 2rpx 14rpx;
+  border-radius: @radius-pill;
+  background: var(--color-primary-strong);
+  color: var(--color-on-strong);
+}
+
+.next__title {
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+  .clamp(2);
+}
+
+.next__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8rpx @space-lg;
+}
+
+.next__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.next__meta-text {
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  .ellipsis();
+}
+
+.next__empty {
+  font-size: @font-body;
+  color: var(--color-text-tertiary);
+}
+
+// ---------- 今日安排 ----------
+.today__section {
+  margin-top: @space-lg;
+}
+
+.today__list {
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+}
+
+.today__fab {
+  position: fixed;
+  right: @space-xl;
+  bottom: calc(env(safe-area-inset-bottom) + 48rpx);
+  z-index: 30;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-strong);
+  box-shadow: 0 12rpx 32rpx rgba(38, 117, 236, 0.36);
+  transition: transform @duration-fast @ease-standard;
+}
+
+// 课程详情弹层内容（页面作用域，渲染在组件插槽内）
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+  padding-bottom: @space-md;
+}
+
+.detail__color {
+  padding: @space-md @space-lg;
+  border-radius: var(--radius-md);
+  border-left: 8rpx solid transparent;
+  font-size: @font-title;
+  font-weight: 600;
+  .clamp(2);
+}
+
+.detail__row {
+  display: flex;
+  align-items: flex-start;
+  gap: @space-md;
+  padding: @space-2xs 0;
+}
+
+.detail__label {
+  flex: none;
+  width: 96rpx;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.detail__value {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  color: var(--color-text);
+  word-break: break-all;
+}
+
+.detail__footer {
+  display: flex;
+  align-items: center;
+  gap: @space-sm;
+}
+
+.detail__btn {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  margin: 0;
+
+  &::after {
+    border: none;
+  }
+}

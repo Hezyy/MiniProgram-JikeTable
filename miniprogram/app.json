@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/onboarding/index",
+    "pages/today/index",
+    "pages/timetable/index",
+    "pages/schedule/index",
+    "pages/settings/index",
+    "pages/course-edit/index",
+    "pages/event-edit/index",
+    "pages/course-import/index",
+    "pages/data-transfer/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "@navBgColor",
+    "navigationBarTextStyle": "@navTxtStyle",
+    "navigationBarTitleText": "即课课表",
+    "backgroundColor": "@bgColor",
+    "backgroundTextStyle": "@bgTxtStyle"
+  },
+  "tabBar": {
+    "color": "@tabColor",
+    "selectedColor": "@tabSelectedColor",
+    "backgroundColor": "@tabBgColor",
+    "borderStyle": "@tabBorderStyle",
+    "list": [
+      {
+        "pagePath": "pages/today/index",
+        "text": "今日",
+        "iconPath": "assets/icons/tab-today.png",
+        "selectedIconPath": "assets/icons/tab-today-active.png"
+      },
+      {
+        "pagePath": "pages/timetable/index",
+        "text": "课表",
+        "iconPath": "assets/icons/tab-timetable.png",
+        "selectedIconPath": "assets/icons/tab-timetable-active.png"
+      },
+      {
+        "pagePath": "pages/schedule/index",
+        "text": "日程",
+        "iconPath": "assets/icons/tab-schedule.png",
+        "selectedIconPath": "assets/icons/tab-schedule-active.png"
+      },
+      {
+        "pagePath": "pages/settings/index",
+        "text": "设置",
+        "iconPath": "assets/icons/tab-settings.png",
+        "selectedIconPath": "assets/icons/tab-settings-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "darkmode": true,
+  "themeLocation": "theme.json",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,95 @@
+// 设计令牌：CSS 自定义属性，定义在 page 上并向下继承（自定义组件同样可读取）。
+// 本文件只在 app.less 中引入一次。
+
+page {
+  // 背景与表面
+  --color-bg: #f4f7fb;
+  --color-bg-soft: #e9f0f9;
+  --color-surface: rgba(255, 255, 255, 0.72);
+  --color-surface-strong: rgba(255, 255, 255, 0.92);
+  --color-surface-border: rgba(255, 255, 255, 0.78);
+
+  // 文本
+  --color-text: #172033;
+  --color-text-secondary: #657087;
+  --color-text-tertiary: #8a94a8;
+
+  // 语义色
+  --color-primary: #2675ec;
+  --color-primary-soft: rgba(38, 117, 236, 0.12);
+  --color-success: #1f9d68;
+  --color-warning: #d9822b;
+  --color-danger: #d9485f;
+  --color-danger-soft: rgba(217, 72, 95, 0.12);
+
+  // 填充色（承载白色内容），比语义色更深以保证对比度
+  --color-primary-strong: #1e6ad9;
+  --color-success-strong: #1a8558;
+  --color-danger-strong: #c93b52;
+  --color-on-strong: #ffffff;
+
+  // 描边与遮罩
+  --color-border: rgba(82, 101, 128, 0.16);
+  --color-border-strong: rgba(82, 101, 128, 0.3);
+  --color-mask: rgba(15, 20, 32, 0.42);
+
+  // 圆角
+  --radius-sm: 12rpx;
+  --radius-md: 20rpx;
+  --radius-lg: 28rpx;
+
+  // 阴影
+  --shadow-soft: 0 12rpx 36rpx rgba(34, 48, 74, 0.1);
+  --shadow-strong: 0 20rpx 56rpx rgba(34, 48, 74, 0.16);
+
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 28rpx;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+// 深色主题：由页面根节点切换 theme-dark 类
+.theme-dark {
+  --color-bg: #0f1420;
+  --color-bg-soft: #161d2c;
+  --color-surface: rgba(32, 42, 60, 0.72);
+  --color-surface-strong: rgba(38, 49, 70, 0.94);
+  --color-surface-border: rgba(150, 170, 200, 0.16);
+
+  --color-text: #eaf0fa;
+  --color-text-secondary: #9aa6bf;
+  --color-text-tertiary: #76829b;
+
+  --color-primary: #5b9bff;
+  --color-primary-soft: rgba(91, 155, 255, 0.18);
+  --color-success: #3dbe8b;
+  --color-warning: #e2a155;
+  --color-danger: #f0708a;
+  --color-danger-soft: rgba(240, 112, 138, 0.16);
+
+  --color-primary-strong: #2e6fd4;
+  --color-success-strong: #1e8a5c;
+  --color-danger-strong: #c93b52;
+  --color-on-strong: #ffffff;
+
+  --color-border: rgba(150, 170, 200, 0.18);
+  --color-border-strong: rgba(150, 170, 200, 0.34);
+  --color-mask: rgba(0, 0, 0, 0.56);
+
+  --shadow-soft: 0 12rpx 36rpx rgba(0, 0, 0, 0.34);
+  --shadow-strong: 0 20rpx 56rpx rgba(0, 0, 0, 0.44);
+}
+
+view,
+text,
+button,
+input,
+textarea,
+scroll-view,
+picker {
+  box-sizing: border-box;
+}

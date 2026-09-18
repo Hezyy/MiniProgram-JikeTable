@@ -1,0 +1,64 @@
+<view class="page sc {{themeClass}}">
+  <view class="sc__head">
+    <picker mode="date" value="{{anchorDate}}" bindchange="onPickAnchor">
+      <view class="sc__month" hover-class="jk-pressed" hover-stay-time="80" aria-role="button" aria-label="选择要查看的日期">
+        <text class="sc__month-text">{{anchorLabel}}</text>
+        <icon name="calendar" size="32" tone="primary" />
+      </view>
+    </picker>
+    <segmented-control options="{{filterOptions}}" value="{{filter}}" bindchange="onFilterChange" />
+  </view>
+
+  <view class="sc__meta">
+    <text class="sc__meta-text">{{itemCount}} 条 · {{windowStart}} 至 {{windowEnd}}</text>
+  </view>
+
+  <view class="sc__groups" wx:if="{{groupCount > 0}}">
+    <view class="sc__group" wx:for="{{groups}}" wx:key="date">
+      <view class="sc__group-head">
+        <text class="sc__group-relative {{item.isToday ? 'is-today' : ''}}">{{item.relativeLabel}}</text>
+        <text class="sc__group-full">{{item.fullLabel}}</text>
+      </view>
+      <view class="sc__group-list">
+        <timeline-item
+          wx:for="{{item.items}}"
+          wx:for-item="entry"
+          wx:key="id"
+          item="{{entry}}"
+          data-id="{{entry.id}}"
+          bindtapitem="onTapItem"
+          bindtoggletodo="onToggleTodo"
+          bindlongpress="onLongPressItem"
+        />
+      </view>
+    </view>
+
+    <view class="sc__more" wx:if="{{canLoadMore}}">
+      <button class="u-button u-button--ghost sc__more-btn" hover-class="jk-pressed" bindtap="onLoadMore">
+        加载更多
+      </button>
+    </view>
+  </view>
+
+  <empty-state
+    wx:else
+    icon="list"
+    title="{{emptyTitle}}"
+    description="{{emptyDesc}}"
+    actionText="添加日程"
+    bindaction="onAddEvent"
+  />
+
+  <view
+    class="sc__fab"
+    hover-class="jk-pressed"
+    hover-stay-time="80"
+    bindtap="onAddEvent"
+    aria-role="button"
+    aria-label="新建日程"
+  >
+    <icon name="plus" size="48" tone="inverse" />
+  </view>
+
+  <toast id="toast" bindaction="onToastAction" />
+</view>

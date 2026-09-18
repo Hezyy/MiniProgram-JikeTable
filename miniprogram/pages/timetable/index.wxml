@@ -1,0 +1,175 @@
+<view class="page page--flush tt {{themeClass}}">
+  <view class="tt__sticky">
+    <view class="tt__toolbar">
+      <view class="tt__nav">
+        <view
+          class="tt__arrow {{canPrev ? '' : 'is-disabled'}}"
+          hover-class="{{canPrev ? 'jk-pressed' : 'none'}}"
+          hover-stay-time="80"
+          bindtap="onPrevWeek"
+          aria-role="button"
+          aria-label="上一周"
+        >
+          <icon name="chevron-left" size="40" tone="{{canPrev ? 'strong' : 'default'}}" />
+        </view>
+        <view class="tt__title-wrap">
+          <text class="tt__title">{{weekTitle}}</text>
+          <text class="tt__range">{{weekRangeText}}</text>
+        </view>
+        <view
+          class="tt__arrow {{canNext ? '' : 'is-disabled'}}"
+          hover-class="{{canNext ? 'jk-pressed' : 'none'}}"
+          hover-stay-time="80"
+          bindtap="onNextWeek"
+          aria-role="button"
+          aria-label="下一周"
+        >
+          <icon name="chevron-right" size="40" tone="{{canNext ? 'strong' : 'default'}}" />
+        </view>
+      </view>
+      <view class="tt__actions">
+        <view
+          class="tt__back {{isCurrentWeek ? 'is-disabled' : ''}}"
+          hover-class="{{isCurrentWeek ? 'none' : 'jk-pressed'}}"
+          hover-stay-time="80"
+          bindtap="onBackToCurrent"
+          aria-role="button"
+          aria-label="回到本周"
+        >
+          回到本周
+        </view>
+        <view
+          class="tt__add"
+          hover-class="jk-pressed"
+          hover-stay-time="80"
+          bindtap="onAddCourse"
+          aria-role="button"
+          aria-label="新增课程"
+        >
+          <icon name="plus" size="34" tone="inverse" />
+          <text class="tt__add-text">课程</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="tt__notice" wx:if="{{conflictCount > 0}}">
+      <icon name="warning" size="30" tone="danger" />
+      <text class="tt__notice-text">本周有 {{conflictCount}} 处时间冲突，已并排显示</text>
+    </view>
+
+    <view class="tt__head-row" wx:if="{{hasSemester}}">
+      <view class="tt__corner">
+        <text class="tt__corner-text">节次</text>
+      </view>
+      <view
+        wx:for="{{weekdayHeaders}}"
+        wx:key="weekday"
+        class="tt__head-cell {{item.isToday ? 'is-today' : ''}}"
+      >
+        <text class="tt__head-label">{{item.label}}</text>
+        <text class="tt__head-date">{{item.dateText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tt__grid" wx:if="{{hasSemester}}">
+    <view class="tt__body" style="height: {{gridHeight}}rpx;">
+      <view class="tt__lines">
+        <view
+          wx:for="{{rows}}"
+          wx:key="label"
+          class="tt__line {{item.type === 'break' ? 'is-break' : ''}}"
+          style="top: {{item.top + item.height}}rpx;"
+        ></view>
+      </view>
+
+      <view class="tt__time-col">
+        <view
+          wx:for="{{rows}}"
+          wx:key="label"
+          class="tt__row {{item.type === 'break' ? 'is-break' : ''}}"
+          style="top: {{item.top}}rpx; height: {{item.height}}rpx;"
+        >
+          <block wx:if="{{item.type === 'section'}}">
+            <text class="tt__row-no">{{item.label}}</text>
+            <text class="tt__row-time">{{item.startText}}</text>
+            <text class="tt__row-time">{{item.endText}}</text>
+          </block>
+          <text wx:else class="tt__row-break">{{item.label}}</text>
+        </view>
+      </view>
+
+      <view
+        wx:for="{{dayColumns}}"
+        wx:key="weekday"
+        class="tt__day {{item.isToday ? 'is-today' : ''}}"
+      >
+        <course-card
+          wx:for="{{item.blocks}}"
+          wx:for-item="block"
+          wx:key="id"
+          block="{{block}}"
+          bindtapcourse="onTapCourse"
+        />
+        <view
+          wx:if="{{timeLineVisible && item.isToday}}"
+          class="tt__now"
+          style="top: {{timeLineTop}}rpx;"
+        ></view>
+      </view>
+    </view>
+  </view>
+
+  <empty-state
+    wx:else
+    icon="grid"
+    title="还没有设置学期"
+    description="设置学期名称与开学日期后，就能看到每周课表。"
+    actionText="去设置"
+    bindaction="onOpenSettings"
+  />
+
+  <bottom-sheet show="{{detailShow}}" title="{{detail ? detail.name : ''}}" bindclose="onCloseDetail">
+    <view wx:if="{{detail}}" class="cdetail">
+      <view
+        class="cdetail__color"
+        style="background: {{detail.bg}}; color: {{detail.text}}; border-left-color: {{detail.bar}};"
+      >
+        {{detail.name}}
+      </view>
+      <view class="cdetail__row">
+        <text class="cdetail__label">时间</text>
+        <text class="cdetail__value">{{detail.weekdayText}} {{detail.timeText}}</text>
+      </view>
+      <view class="cdetail__row">
+        <text class="cdetail__label">周次</text>
+        <text class="cdetail__value">{{detail.weeksText}}</text>
+      </view>
+      <view class="cdetail__row" wx:if="{{detail.location}}">
+        <text class="cdetail__label">地点</text>
+        <text class="cdetail__value">{{detail.location}}</text>
+      </view>
+      <view class="cdetail__row" wx:if="{{detail.teacher}}">
+        <text class="cdetail__label">教师</text>
+        <text class="cdetail__value">{{detail.teacher}}</text>
+      </view>
+      <view class="cdetail__row" wx:if="{{detail.note}}">
+        <text class="cdetail__label">备注</text>
+        <text class="cdetail__value">{{detail.note}}</text>
+      </view>
+    </view>
+    <view slot="footer" class="cdetail__footer">
+      <button class="u-button u-button--ghost cdetail__btn" hover-class="jk-pressed" bindtap="onCloseDetail">
+        关闭
+      </button>
+      <button class="u-button u-button--danger cdetail__btn" hover-class="jk-pressed" bindtap="onDeleteCourse">
+        删除
+      </button>
+      <button class="u-button u-button--primary cdetail__btn" hover-class="jk-pressed" bindtap="onEditCourse">
+        编辑
+      </button>
+    </view>
+  </bottom-sheet>
+
+  <toast id="toast" bindaction="onToastAction" />
+</view>

@@ -1,0 +1,191 @@
+<view class="page {{themeClass}}">
+  <view class="settings">
+    <!-- 学期 -->
+    <view class="u-section">
+      <view class="u-section__title">学期</view>
+      <view class="u-list">
+        <view class="u-list__row">
+          <text class="u-list__label">学期名称</text>
+          <input
+            class="settings__input"
+            value="{{semesterName}}"
+            maxlength="{{semesterNameMax}}"
+            placeholder="填写学期名称"
+            placeholder-class="settings__placeholder"
+            bindinput="onNameInput"
+            bindblur="onNameBlur"
+            bindconfirm="onNameConfirm"
+            aria-label="学期名称，最多 {{semesterNameMax}} 个字"
+          />
+        </view>
+
+        <view class="u-list__row">
+          <text class="u-list__label">开学日期</text>
+          <picker
+            class="settings__picker"
+            mode="date"
+            value="{{startDate}}"
+            bindchange="onStartDateChange"
+            aria-label="开学日期，当前为 {{startDate}}"
+          >
+            <view class="settings__picker-value" hover-class="jk-pressed" hover-stay-time="80">
+              {{startDate}}
+            </view>
+          </picker>
+          <icon name="chevron-right" size="32" />
+        </view>
+
+        <view class="u-list__row">
+          <text class="u-list__label">总周数</text>
+          <picker
+            class="settings__picker"
+            mode="selector"
+            range="{{weekOptions}}"
+            value="{{weekIndex}}"
+            bindchange="onWeeksChange"
+            aria-label="总周数，当前为 {{weekOptions[weekIndex]}}"
+          >
+            <view class="settings__picker-value" hover-class="jk-pressed" hover-stay-time="80">
+              {{weekOptions[weekIndex]}}
+            </view>
+          </picker>
+          <icon name="chevron-right" size="32" />
+        </view>
+
+        <view class="u-list__row">
+          <text class="u-list__label">每周起始日</text>
+          <picker
+            class="settings__picker"
+            mode="selector"
+            range="{{weekStartOptions}}"
+            value="{{weekStartIndex}}"
+            bindchange="onWeekStartChange"
+            aria-label="每周起始日，当前为 {{weekStartOptions[weekStartIndex]}}"
+          >
+            <view class="settings__picker-value" hover-class="jk-pressed" hover-stay-time="80">
+              {{weekStartOptions[weekStartIndex]}}
+            </view>
+          </picker>
+          <icon name="chevron-right" size="32" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 显示 -->
+    <view class="u-section">
+      <view class="u-section__title">显示</view>
+      <view class="u-list">
+        <view class="u-list__row">
+          <text class="u-list__label">主题</text>
+          <picker
+            class="settings__picker"
+            mode="selector"
+            range="{{themeOptions}}"
+            value="{{themeIndex}}"
+            bindchange="onThemeChange"
+            aria-label="主题，当前为 {{themeOptions[themeIndex]}}"
+          >
+            <view class="settings__picker-value" hover-class="jk-pressed" hover-stay-time="80">
+              {{themeOptions[themeIndex]}}
+            </view>
+          </picker>
+          <icon name="chevron-right" size="32" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 课程 -->
+    <view class="u-section">
+      <view class="u-section__title">课程</view>
+      <view class="u-list">
+        <view
+          class="u-list__row"
+          hover-class="jk-pressed"
+          hover-stay-time="80"
+          bindtap="onOpenCourseImport"
+          aria-role="button"
+          aria-label="从教务系统导入课表"
+        >
+          <text class="settings__row-label settings__row-label--grow">从教务系统导入课表</text>
+          <text class="settings__row-note">粘贴课表文本自动识别</text>
+          <icon name="chevron-right" size="32" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 数据 -->
+    <view class="u-section">
+      <view class="u-section__title">数据</view>
+      <view class="u-list">
+        <view
+          class="u-list__row"
+          hover-class="jk-pressed"
+          hover-stay-time="80"
+          bindtap="onOpenTransfer"
+          aria-role="button"
+          aria-label="数据导入与导出"
+        >
+          <text class="settings__row-label settings__row-label--grow">数据导入与导出</text>
+          <text class="settings__row-note">备份或恢复本机数据</text>
+          <icon name="chevron-right" size="32" />
+        </view>
+
+        <view class="u-list__row" wx:if="{{hasBackup}}">
+          <view class="settings__stack">
+            <text class="settings__stack-title">检测到损坏数据备份（{{backupSize}} 字符）</text>
+            <text class="settings__stack-desc">上次读取本地数据失败时的原始内容，可导出用于排查。</text>
+          </view>
+        </view>
+
+        <view class="u-list__row settings__row--actions" wx:if="{{hasBackup}}">
+          <button
+            class="u-button u-button--secondary settings__mini-button"
+            hover-class="jk-pressed"
+            hover-stay-time="80"
+            bindtap="onExportBackup"
+            aria-label="导出备份用于诊断"
+          >
+            导出备份用于诊断
+          </button>
+          <button
+            class="u-button u-button--ghost settings__mini-button"
+            hover-class="jk-pressed"
+            hover-stay-time="80"
+            bindtap="onDeleteBackup"
+            aria-label="删除损坏数据备份"
+          >
+            删除备份
+          </button>
+        </view>
+
+        <view
+          class="u-list__row"
+          hover-class="jk-pressed"
+          hover-stay-time="80"
+          bindtap="onClearAll"
+          aria-role="button"
+          aria-label="清空所有数据"
+        >
+          <text class="settings__row-label settings__row-label--grow settings__danger">清空所有数据</text>
+          <icon name="trash" size="34" tone="danger" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 关于 -->
+    <view class="u-section">
+      <view class="u-section__title">关于</view>
+      <view class="u-list">
+        <view class="u-list__row">
+          <text class="u-list__label">版本</text>
+          <text class="u-list__value">{{version}}</text>
+        </view>
+        <view class="u-list__row settings__row--stacked">
+          <text class="settings__stack-desc">所有课程与日程只保存在本机，不会上传到任何服务器。</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <toast id="toast" />
+</view>

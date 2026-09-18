@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "编辑日程",
+  "usingComponents": {
+    "segmented-control": "/components/segmented-control/segmented-control",
+    "toast": "/components/toast/toast",
+    "icon": "/components/icon/icon"
+  }
+}

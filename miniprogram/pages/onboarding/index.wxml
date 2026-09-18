@@ -1,0 +1,87 @@
+<view class="page {{themeClass}}">
+  <view class="onboarding">
+    <view class="onboarding__brand">
+      <text class="onboarding__title">即课课表</text>
+      <text class="onboarding__subtitle">先填好学期信息，就能马上查看课表、安排日程。</text>
+    </view>
+
+    <view class="glass-panel onboarding__card">
+      <view class="field">
+        <text class="field__label">学期名称</text>
+        <input
+          class="field__input"
+          value="{{name}}"
+          maxlength="{{nameMaxLength}}"
+          placeholder="例如：2024-2025 学年 第二学期"
+          placeholder-class="field__placeholder"
+          focus="{{nameFocus}}"
+          confirm-type="done"
+          bindinput="onNameInput"
+          bindblur="onNameBlur"
+          aria-label="学期名称，最多 {{nameMaxLength}} 个字"
+        />
+        <text class="field__error" wx:if="{{errors.name}}">{{errors.name}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field__label">开学日期</text>
+        <picker
+          mode="date"
+          value="{{startDate}}"
+          bindchange="onStartDateChange"
+          aria-label="开学日期，当前为 {{startDate}}"
+        >
+          <view class="field__picker" hover-class="jk-pressed" hover-stay-time="80">
+            <text class="u-grow">{{startDate}}</text>
+            <icon name="calendar" size="36" />
+          </view>
+        </picker>
+        <text class="field__error" wx:if="{{errors.startDate}}">{{errors.startDate}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field__label">总周数</text>
+        <picker
+          mode="selector"
+          range="{{weekOptions}}"
+          value="{{weekIndex}}"
+          bindchange="onWeeksChange"
+          aria-label="总周数，当前为 {{weekOptions[weekIndex]}}"
+        >
+          <view class="field__picker" hover-class="jk-pressed" hover-stay-time="80">
+            <text class="u-grow">{{weekOptions[weekIndex]}}</text>
+            <icon name="chevron-down" size="32" />
+          </view>
+        </picker>
+        <text class="field__error" wx:if="{{errors.totalWeeks}}">{{errors.totalWeeks}}</text>
+      </view>
+    </view>
+
+    <view class="onboarding__actions">
+      <button
+        class="u-button u-button--primary u-button--block"
+        hover-class="jk-pressed"
+        hover-stay-time="80"
+        disabled="{{saving}}"
+        bindtap="onSubmit"
+        aria-label="开始使用"
+      >
+        {{saving ? '正在保存…' : '开始使用'}}
+      </button>
+      <button
+        class="u-button u-button--ghost u-button--block"
+        hover-class="jk-pressed"
+        hover-stay-time="80"
+        disabled="{{saving}}"
+        bindtap="onUseDemo"
+        aria-label="使用示例体验"
+      >
+        使用示例体验
+      </button>
+    </view>
+
+    <text class="onboarding__hint">学期名称、开学日期和总周数之后都能在「设置」中修改。</text>
+  </view>
+
+  <toast id="toast" />
+</view>

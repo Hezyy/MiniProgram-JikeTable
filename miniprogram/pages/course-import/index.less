@@ -1,0 +1,362 @@
+@import '../../styles/variables.less';
+
+// 从教务系统导入课表：说明 → 粘贴 → 解析预览 → 选择导入方式 → 底部固定导入按钮。
+
+.ci {
+  padding-bottom: 0;
+}
+
+// ---------- 说明卡片 ----------
+
+.ci__intro {
+  margin-top: @space-md;
+  padding: @space-lg;
+}
+
+.ci__intro-title {
+  display: block;
+  font-size: @font-title;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ci__intro-text {
+  display: block;
+  margin-top: @space-xs;
+  font-size: @font-body;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.ci__strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ci__steps {
+  margin-top: @space-md;
+  padding-top: @space-md;
+  border-top: 1rpx solid var(--color-border);
+}
+
+.ci__tip {
+  margin-top: @space-md;
+  padding: @space-sm @space-md;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-soft);
+  border-left: 6rpx solid var(--color-warning);
+}
+
+.ci__tip-title {
+  display: block;
+  font-size: @font-caption;
+  font-weight: 600;
+  color: var(--color-warning);
+}
+
+.ci__tip-text {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.ci__step {
+  display: flex;
+  align-items: flex-start;
+  gap: @space-sm;
+}
+
+.ci__step + .ci__step {
+  margin-top: @space-sm;
+}
+
+.ci__step-index {
+  flex: none;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 22rpx;
+  font-weight: 600;
+  line-height: 36rpx;
+  text-align: center;
+}
+
+.ci__step-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+// ---------- 卡片与输入 ----------
+
+.ci__card {
+  padding: @space-lg;
+}
+
+.ci__textarea {
+  width: 100%;
+  min-height: 320rpx;
+  padding: @space-sm @space-md;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  font-size: @font-body;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.ci__placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ci__actions {
+  display: flex;
+  gap: @space-sm;
+  margin-top: @space-md;
+}
+
+.ci__action {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: @font-body;
+}
+
+// ---------- 解析结果 ----------
+
+.ci__result-head {
+  display: flex;
+  align-items: center;
+  gap: @space-xs;
+}
+
+.ci__result-msg {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ci__result-msg.is-ok {
+  color: var(--color-success);
+}
+
+.ci__result-msg.is-error {
+  color: var(--color-danger);
+}
+
+.ci__warnings {
+  margin-top: @space-md;
+}
+
+.ci__warning {
+  display: flex;
+  align-items: flex-start;
+  gap: @space-xs;
+  padding: @space-sm @space-md;
+  border-radius: @radius-xs;
+  border-left: 6rpx solid var(--color-warning);
+  background: var(--color-bg-soft);
+}
+
+.ci__warning + .ci__warning {
+  margin-top: @space-xs;
+}
+
+.ci__warning-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-warning);
+  line-height: 1.5;
+}
+
+.ci__issues {
+  margin-top: @space-md;
+  padding-top: @space-md;
+  border-top: 1rpx solid var(--color-border);
+}
+
+.ci__issues-title {
+  display: block;
+  font-size: @font-caption;
+  color: var(--color-danger);
+}
+
+.ci__issue {
+  margin-top: @space-xs;
+  padding: @space-sm @space-md;
+  border-radius: @radius-xs;
+  background: var(--color-danger-soft);
+}
+
+.ci__issue-msg {
+  display: block;
+  font-size: @font-caption;
+  color: var(--color-danger);
+  line-height: 1.5;
+}
+
+.ci__issue-raw {
+  display: block;
+  margin-top: @space-2xs;
+  font-family: 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+  word-break: break-all;
+  .clamp(2);
+}
+
+// ---------- 课程预览列表 ----------
+
+.ci__list {
+  display: flex;
+  flex-direction: column;
+  gap: @space-xs;
+  margin-top: @space-md;
+}
+
+// 卡片底色 / 文字 / 左侧色条由 getColor 的结果内联注入，与课表里的课程块保持一致。
+.ci__item {
+  padding: @space-sm @space-md;
+  border-radius: var(--radius-md);
+  border-left: 8rpx solid transparent;
+}
+
+.ci__item-name {
+  display: block;
+  font-size: @font-body;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.ci__item-line {
+  display: flex;
+  align-items: baseline;
+  gap: @space-xs;
+  margin-top: @space-2xs;
+  font-size: @font-caption;
+  line-height: 1.4;
+  opacity: 0.86;
+}
+
+.ci__item-when,
+.ci__item-location {
+  flex: 1;
+  min-width: 0;
+  .ellipsis();
+}
+
+.ci__item-time,
+.ci__item-teacher {
+  flex: none;
+}
+
+.ci__item-weeks {
+  display: block;
+  margin-top: @space-2xs;
+  font-size: 22rpx;
+  line-height: 1.4;
+  opacity: 0.76;
+}
+
+// ---------- 导入方式 ----------
+
+.ci__danger-hint {
+  display: block;
+  margin-top: @space-sm;
+  font-size: @font-caption;
+  color: var(--color-danger);
+  line-height: 1.5;
+}
+
+.ci__weeks {
+  margin-top: @space-md;
+  padding-top: @space-md;
+  border-top: 1rpx solid var(--color-border);
+}
+
+.ci__weeks-text {
+  display: block;
+  font-size: @font-caption;
+  color: var(--color-warning);
+  line-height: 1.5;
+}
+
+.ci__check-row {
+  display: flex;
+  align-items: center;
+  gap: @space-sm;
+  min-height: @touch-size;
+  margin-top: @space-xs;
+  padding: 0 @space-md;
+  border-radius: @radius-md;
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  .tappable();
+}
+
+.ci__check {
+  flex: none;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: @radius-xs;
+  border: 2rpx solid var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color @duration-fast @ease-standard, border-color @duration-fast @ease-standard;
+}
+
+.ci__check.is-checked {
+  background: var(--color-success-strong);
+  border-color: var(--color-success-strong);
+}
+
+.ci__check-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+// ---------- 空状态与底部操作条 ----------
+
+.ci__empty {
+  padding-top: @space-2xl;
+}
+
+.ci__spacer {
+  height: 200rpx;
+}
+
+.ci__bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  padding: @space-sm @space-page;
+  .safe-bottom(@space-sm);
+  background: var(--color-surface-strong);
+  border-top: 1rpx solid var(--color-border);
+  backdrop-filter: blur(24rpx) saturate(140%);
+  -webkit-backdrop-filter: blur(24rpx) saturate(140%);
+}
+
+.ci__bar-btn {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: @font-body;
+}

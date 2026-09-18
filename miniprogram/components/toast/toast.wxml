@@ -1,0 +1,17 @@
+<view class="toast-host" wx:if="{{visible}}" aria-live="polite">
+  <view class="toast toast--{{type}}">
+    <icon name="{{iconName}}" size="34" tone="inverse" />
+    <text class="toast__msg">{{message}}</text>
+    <view
+      wx:if="{{actionText}}"
+      class="toast__action"
+      hover-class="toast__action--pressed"
+      hover-stay-time="60"
+      catchtap="onAction"
+      aria-role="button"
+      aria-label="{{actionText}}"
+    >
+      {{actionText}}
+    </view>
+  </view>
+</view>

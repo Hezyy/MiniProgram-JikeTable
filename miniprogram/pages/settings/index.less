@@ -1,0 +1,113 @@
+@import '../../styles/variables.less';
+
+// 设置页：四组行式列表，不使用嵌套卡片。
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  padding-top: @space-md;
+  .safe-bottom(@space-2xl);
+}
+
+// ---------- 行内输入与选择 ----------
+
+.settings__input {
+  flex: 1;
+  min-width: 0;
+  height: @touch-size;
+  margin-left: @space-md;
+  text-align: right;
+  font-size: @font-body;
+  color: var(--color-text);
+}
+
+.settings__placeholder {
+  color: var(--color-text-tertiary);
+  font-size: @font-body;
+}
+
+.settings__picker {
+  flex: 1;
+  min-width: 0;
+  margin-left: @space-md;
+}
+
+.settings__picker-value {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: @touch-size;
+  font-size: @font-body;
+  color: var(--color-text-secondary);
+  .tappable();
+  .ellipsis();
+}
+
+// ---------- 行文案 ----------
+
+.settings__row-label {
+  flex: none;
+  margin-right: @space-md;
+  color: var(--color-text);
+}
+
+.settings__row-label--grow {
+  flex: 1;
+  min-width: 0;
+  margin-right: 0;
+  .ellipsis();
+}
+
+.settings__row-note {
+  flex: none;
+  margin-right: @space-sm;
+  font-size: @font-caption;
+  color: var(--color-text-tertiary);
+}
+
+.settings__danger {
+  color: var(--color-danger);
+}
+
+.settings__stack {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.settings__stack-title {
+  font-size: @font-body;
+  color: var(--color-text);
+}
+
+.settings__stack-desc {
+  margin-top: @space-2xs;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.settings__row--stacked {
+  align-items: flex-start;
+}
+
+.settings__row--actions {
+  flex-wrap: wrap;
+  gap: @space-sm;
+}
+
+.settings__mini-button {
+  min-height: @touch-size;
+  padding: 0 @space-md;
+  border-radius: var(--radius-sm);
+  font-size: @font-caption;
+}
+
+// ---------- 开关 ----------
+// 说明：产品不使用触觉反馈，设置页因此没有 switch 项。
+
+// 小程序 button 默认带一层边框伪元素，使用工具类按钮时需清除。
+button::after {
+  border: none;
+}

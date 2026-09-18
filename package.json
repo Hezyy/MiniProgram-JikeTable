@@ -1,0 +1,26 @@
+{
+  "name": "jike-timetable",
+  "version": "1.0.0",
+  "description": "即课课表 —— 课表查询与日程计划微信小程序（原生 TypeScript + Less）",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "tsc -p tsconfig.test.json && node --test \".tmp-test/tests/*.test.js\"",
+    "lint:less": "node tools/check-less.mjs",
+    "lint:press": "node tools/check-press-feedback.mjs",
+    "icons": "node tools/generate-icons.mjs",
+    "verify": "npm run typecheck && npm run test && npm run lint:less && npm run lint:press"
+  },
+  "keywords": [
+    "miniprogram",
+    "wechat",
+    "timetable"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "less": "^4.9.1",
+    "miniprogram-api-typings": "^2.8.3-1",
+    "typescript": "^7.0.2"
+  }
+}

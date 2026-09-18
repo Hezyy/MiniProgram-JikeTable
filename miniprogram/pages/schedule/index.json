@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "日程",
+  "usingComponents": {
+    "segmented-control": "/components/segmented-control/segmented-control",
+    "timeline-item": "/components/timeline-item/timeline-item",
+    "empty-state": "/components/empty-state/empty-state",
+    "toast": "/components/toast/toast",
+    "icon": "/components/icon/icon"
+  }
+}

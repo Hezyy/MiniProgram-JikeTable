@@ -1,0 +1,222 @@
+@import '../../styles/variables.less';
+
+.ce {
+  padding-bottom: 0;
+}
+
+.ce__card {
+  margin-top: @space-md;
+  padding: @space-xs @space-lg @space-md;
+}
+
+.ce__field {
+  padding: @space-md 0;
+  border-bottom: 1rpx solid var(--color-border);
+}
+
+.ce__field--last {
+  border-bottom: none;
+}
+
+.ce__field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: @space-sm;
+  min-height: 40rpx;
+  margin-bottom: @space-xs;
+}
+
+.ce__label {
+  flex: none;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.ce__required {
+  color: var(--color-danger);
+  margin-left: 4rpx;
+}
+
+.ce__error {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-size: 22rpx;
+  color: var(--color-danger);
+  .ellipsis();
+}
+
+.ce__counter {
+  flex: none;
+  font-size: 22rpx;
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.ce__input,
+.ce__textarea {
+  width: 100%;
+  min-height: 72rpx;
+  padding: @space-sm @space-md;
+  border-radius: @radius-md;
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  font-size: @font-body;
+  color: var(--color-text);
+}
+
+.ce__input.is-error,
+.ce__textarea.is-error,
+.ce__picker.is-error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.ce__textarea {
+  min-height: 140rpx;
+  line-height: 1.5;
+}
+
+.ce__placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ce__picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: @space-xs;
+  min-height: 76rpx;
+  padding: 0 @space-md;
+  border-radius: @radius-md;
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  .tappable();
+}
+
+.ce__picker-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-text);
+  .ellipsis();
+}
+
+.ce__row {
+  display: flex;
+  align-items: center;
+  gap: @space-sm;
+}
+
+.ce__row-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.ce__weeks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: @space-xs;
+  margin-top: @space-md;
+}
+
+.ce__week {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: @radius-sm;
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: @font-caption;
+  font-variant-numeric: tabular-nums;
+  transition: background-color @duration-fast @ease-standard, color @duration-fast @ease-standard,
+    transform @duration-fast @ease-standard;
+}
+
+.ce__week.is-selected {
+  background: var(--color-primary-strong);
+  border-color: var(--color-primary-strong);
+  color: var(--color-on-strong);
+  font-weight: 600;
+}
+
+.ce__week-actions {
+  display: flex;
+  align-items: center;
+  gap: @space-lg;
+  margin-top: @space-md;
+}
+
+.ce__link {
+  min-height: 56rpx;
+  display: flex;
+  align-items: center;
+  font-size: @font-caption;
+  color: var(--color-primary);
+  .tappable();
+}
+
+.ce__colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: @space-xs;
+  margin-top: @space-xs;
+}
+
+.ce__color {
+  min-width: 104rpx;
+  height: 64rpx;
+  padding: 0 @space-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: @radius-sm;
+  border: 2rpx solid transparent;
+  font-size: 22rpx;
+  transition: transform @duration-fast @ease-standard;
+}
+
+.ce__color.is-selected {
+  box-shadow: 0 0 0 3rpx var(--color-primary);
+  font-weight: 600;
+}
+
+.ce__spacer {
+  height: 200rpx;
+}
+
+.ce__bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: @space-sm;
+  padding: @space-sm @space-page;
+  .safe-bottom(@space-sm);
+  background: var(--color-surface-strong);
+  border-top: 1rpx solid var(--color-border);
+  backdrop-filter: blur(24rpx) saturate(140%);
+  -webkit-backdrop-filter: blur(24rpx) saturate(140%);
+}
+
+.ce__bar-btn {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: @font-body;
+
+  &::after {
+    border: none;
+  }
+}
+
+.ce__bar-btn--main {
+  flex: 2;
+}

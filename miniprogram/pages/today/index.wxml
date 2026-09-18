@@ -1,0 +1,138 @@
+<view class="page today {{themeClass}}">
+  <view class="hero glass-panel">
+    <view class="hero__date">
+      <text class="hero__day">{{dateNumber}}</text>
+      <view class="hero__date-meta">
+        <text class="hero__weekday">{{weekdayText}}</text>
+        <text class="hero__month">{{monthLabel}}</text>
+      </view>
+    </view>
+    <view class="hero__term">
+      <text class="hero__term-name">{{semesterName}}</text>
+      <text class="hero__week {{hasSemester ? '' : 'is-muted'}}">{{weekText}}</text>
+    </view>
+  </view>
+
+  <view
+    class="next glass-panel"
+    wx:if="{{hasSemester}}"
+    hover-class="jk-pressed"
+    hover-stay-time="100"
+    bindtap="onOpenTimetable"
+    aria-role="button"
+    aria-label="查看本周课表"
+  >
+    <view class="next__bar" wx:if="{{hasNext}}" style="background: {{nextColorBar}};"></view>
+    <view class="next__body">
+      <view class="next__head">
+        <text class="next__label">下一节课</text>
+        <text class="next__badge" wx:if="{{nextBadge}}">{{nextBadge}}</text>
+        <text
+          class="next__count {{nextOngoing ? 'next__count--live' : ''}}"
+          wx:if="{{nextCountdown}}"
+        >
+          {{nextCountdown}}
+        </text>
+      </view>
+      <block wx:if="{{hasNext}}">
+        <text class="next__title">{{nextTitle}}</text>
+        <view class="next__meta">
+          <view class="next__meta-item" wx:if="{{nextTimeText}}">
+            <icon name="clock" size="26" tone="default" />
+            <text class="next__meta-text">{{nextTimeText}}</text>
+          </view>
+          <view class="next__meta-item" wx:if="{{nextLocation}}">
+            <icon name="location" size="26" tone="default" />
+            <text class="next__meta-text">{{nextLocation}}</text>
+          </view>
+        </view>
+      </block>
+      <text class="next__empty" wx:else>{{nextEmptyText}}</text>
+    </view>
+  </view>
+
+  <view class="today__section">
+    <view class="u-section__title">今日安排</view>
+    <view class="today__list" wx:if="{{timeline.length > 0}}">
+      <timeline-item
+        wx:for="{{timeline}}"
+        wx:key="id"
+        item="{{item}}"
+        bindtapitem="onTapItem"
+        bindtoggletodo="onToggleTodo"
+      />
+    </view>
+    <empty-state
+      wx:elif="{{hasSemester}}"
+      icon="calendar"
+      title="{{emptyTitle}}"
+      description="{{emptyDesc}}"
+      actionText="添加日程"
+      bindaction="onAddEvent"
+    />
+    <empty-state
+      wx:else
+      icon="info"
+      title="{{emptyTitle}}"
+      description="{{emptyDesc}}"
+      actionText="去设置"
+      bindaction="onOpenSettings"
+    />
+  </view>
+
+  <view
+    class="today__fab"
+    hover-class="jk-pressed"
+    hover-stay-time="80"
+    bindtap="onAddEvent"
+    aria-role="button"
+    aria-label="新建日程"
+  >
+    <icon name="plus" size="48" tone="inverse" />
+  </view>
+
+  <bottom-sheet
+    show="{{detailShow}}"
+    title="{{detail ? detail.name : ''}}"
+    bindclose="onCloseDetail"
+  >
+    <view wx:if="{{detail}}" class="detail">
+      <view class="detail__color" style="background: {{detail.bg}}; color: {{detail.text}}; border-left-color: {{detail.bar}};">
+        {{detail.name}}
+      </view>
+      <view class="detail__row">
+        <text class="detail__label">时间</text>
+        <text class="detail__value">{{detail.weekdayText}} {{detail.timeText}}</text>
+      </view>
+      <view class="detail__row">
+        <text class="detail__label">周次</text>
+        <text class="detail__value">{{detail.weeksText}}</text>
+      </view>
+      <view class="detail__row" wx:if="{{detail.location}}">
+        <text class="detail__label">地点</text>
+        <text class="detail__value">{{detail.location}}</text>
+      </view>
+      <view class="detail__row" wx:if="{{detail.teacher}}">
+        <text class="detail__label">教师</text>
+        <text class="detail__value">{{detail.teacher}}</text>
+      </view>
+      <view class="detail__row" wx:if="{{detail.note}}">
+        <text class="detail__label">备注</text>
+        <text class="detail__value">{{detail.note}}</text>
+      </view>
+    </view>
+    <view slot="footer" class="detail__footer">
+      <button class="u-button u-button--ghost detail__btn" hover-class="jk-pressed" bindtap="onCloseDetail">
+        关闭
+      </button>
+      <button class="u-button u-button--danger detail__btn" hover-class="jk-pressed" bindtap="onDeleteCourse">
+        删除
+      </button>
+      <button class="u-button u-button--primary detail__btn" hover-class="jk-pressed" bindtap="onEditCourse">
+        编辑
+      </button>
+    </view>
+  </bottom-sheet>
+
+  <toast id="toast" bindaction="onToastAction" />
+</view>

@@ -1,0 +1,36 @@
+<view
+  class="tl {{item.completed ? 'is-done' : ''}} {{item.status === 'finished' ? 'is-finished' : ''}}"
+  hover-class="jk-pressed"
+  hover-stay-time="80"
+  bindtap="onTap"
+  aria-role="button"
+  aria-label="{{ariaLabel}}"
+>
+  <view class="tl__bar" style="background: {{color.bar}};"></view>
+  <view class="tl__main">
+    <view class="tl__row">
+      <text class="tl__title">{{item.title}}</text>
+      <text wx:if="{{statusText}}" class="tl__status tl__status--{{item.status}}">{{statusText}}</text>
+    </view>
+    <view class="tl__meta">
+      <text class="tl__time">{{item.timeText}}</text>
+      <block wx:if="{{item.location}}">
+        <text class="tl__sep">·</text>
+        <text class="tl__loc">{{item.location}}</text>
+      </block>
+    </view>
+    <view wx:if="{{item.subtitle}}" class="tl__sub">{{item.subtitle}}</view>
+  </view>
+  <view
+    wx:if="{{item.isTodo}}"
+    class="tl__check {{item.completed ? 'is-checked' : ''}}"
+    hover-class="tl__check--pressed"
+    hover-stay-time="80"
+    catchtap="onToggle"
+    aria-role="checkbox"
+    aria-checked="{{item.completed}}"
+    aria-label="{{item.completed ? '标记为未完成' : '标记为已完成'}}"
+  >
+    <icon wx:if="{{item.completed}}" name="check" size="30" tone="inverse" />
+  </view>
+</view>

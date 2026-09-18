@@ -1,0 +1,226 @@
+<view class="page ce {{themeClass}}">
+  <view class="ce__card glass-panel">
+    <view class="ce__field" id="field-name">
+      <view class="ce__field-head">
+        <text class="ce__label">课程名<text class="ce__required">*</text></text>
+        <text class="ce__error" wx:if="{{errors.name}}">{{errors.name}}</text>
+        <text class="ce__counter" wx:else>{{nameLength}}/{{maxName}}</text>
+      </view>
+      <input
+        class="ce__input {{errors.name ? 'is-error' : ''}}"
+        value="{{name}}"
+        maxlength="{{maxName}}"
+        placeholder="例如：高等数学 A"
+        placeholder-class="ce__placeholder"
+        focus="{{focusField === 'name'}}"
+        bindinput="onNameInput"
+        aria-label="课程名"
+      />
+    </view>
+
+    <view class="ce__field" id="field-teacher">
+      <view class="ce__field-head">
+        <text class="ce__label">教师</text>
+        <text class="ce__error" wx:if="{{errors.teacher}}">{{errors.teacher}}</text>
+      </view>
+      <input
+        class="ce__input {{errors.teacher ? 'is-error' : ''}}"
+        value="{{teacher}}"
+        maxlength="{{maxTeacher}}"
+        placeholder="选填"
+        placeholder-class="ce__placeholder"
+        focus="{{focusField === 'teacher'}}"
+        bindinput="onTeacherInput"
+        aria-label="教师"
+      />
+    </view>
+
+    <view class="ce__field" id="field-location">
+      <view class="ce__field-head">
+        <text class="ce__label">地点</text>
+        <text class="ce__error" wx:if="{{errors.location}}">{{errors.location}}</text>
+      </view>
+      <input
+        class="ce__input {{errors.location ? 'is-error' : ''}}"
+        value="{{location}}"
+        maxlength="{{maxLocation}}"
+        placeholder="例如：教三楼 201"
+        placeholder-class="ce__placeholder"
+        focus="{{focusField === 'location'}}"
+        bindinput="onLocationInput"
+        aria-label="地点"
+      />
+    </view>
+
+    <view class="ce__field" id="field-weekday">
+      <view class="ce__field-head">
+        <text class="ce__label">星期<text class="ce__required">*</text></text>
+        <text class="ce__error" wx:if="{{errors.weekday}}">{{errors.weekday}}</text>
+      </view>
+      <picker
+        mode="selector"
+        range="{{weekdayOptions}}"
+        range-key="label"
+        value="{{weekdayIndex}}"
+        bindchange="onWeekdayChange"
+      >
+        <view
+          class="ce__picker {{errors.weekday ? 'is-error' : ''}}"
+          hover-class="jk-pressed"
+          hover-stay-time="100"
+        >
+          <text class="ce__picker-text">{{weekdayOptions[weekdayIndex].label}}</text>
+          <icon name="chevron-down" size="32" tone="default" />
+        </view>
+      </picker>
+    </view>
+
+    <view class="ce__field" id="field-section">
+      <view class="ce__field-head">
+        <text class="ce__label">节次<text class="ce__required">*</text></text>
+        <text class="ce__error" wx:if="{{errors.startSection || errors.endSection}}">
+          {{errors.startSection || errors.endSection}}
+        </text>
+      </view>
+      <view class="ce__row">
+        <picker
+          class="ce__row-item"
+          mode="selector"
+          range="{{sectionOptions}}"
+          range-key="label"
+          value="{{startIndex}}"
+          bindchange="onStartSectionChange"
+        >
+          <view
+            class="ce__picker {{errors.startSection ? 'is-error' : ''}}"
+            hover-class="jk-pressed"
+            hover-stay-time="100"
+          >
+            <text class="ce__picker-text">开始 {{sectionOptions[startIndex].label}}</text>
+            <icon name="chevron-down" size="32" tone="default" />
+          </view>
+        </picker>
+        <picker
+          class="ce__row-item"
+          mode="selector"
+          range="{{sectionOptions}}"
+          range-key="label"
+          value="{{endIndex}}"
+          bindchange="onEndSectionChange"
+        >
+          <view
+            class="ce__picker {{errors.endSection ? 'is-error' : ''}}"
+            hover-class="jk-pressed"
+            hover-stay-time="100"
+          >
+            <text class="ce__picker-text">结束 {{sectionOptions[endIndex].label}}</text>
+            <icon name="chevron-down" size="32" tone="default" />
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="ce__field" id="field-weeks">
+      <view class="ce__field-head">
+        <text class="ce__label">周次<text class="ce__required">*</text></text>
+        <text class="ce__error" wx:if="{{errors.weeks}}">{{errors.weeks}}</text>
+      </view>
+      <segmented-control
+        options="{{weekModeOptions}}"
+        value="{{weekMode}}"
+        bindchange="onWeekModeChange"
+      />
+      <view class="ce__weeks">
+        <view
+          wx:for="{{weekCells}}"
+          wx:key="week"
+          class="ce__week {{item.selected ? 'is-selected' : ''}}"
+          data-week="{{item.week}}"
+          bindtap="onToggleWeek"
+          hover-class="jk-pressed"
+          hover-stay-time="60"
+          aria-role="checkbox"
+          aria-checked="{{item.selected}}"
+          aria-label="第 {{item.week}} 周"
+        >
+          {{item.week}}
+        </view>
+      </view>
+      <view class="ce__week-actions">
+        <view class="ce__link" hover-class="jk-pressed" hover-stay-time="60" bindtap="onSelectAllWeeks" aria-role="button" aria-label="选择全部周次">
+          全选
+        </view>
+        <view class="ce__link" hover-class="jk-pressed" hover-stay-time="60" bindtap="onClearWeeks" aria-role="button" aria-label="清空周次">
+          清空
+        </view>
+      </view>
+    </view>
+
+    <view class="ce__field" id="field-color">
+      <view class="ce__field-head">
+        <text class="ce__label">颜色<text class="ce__required">*</text></text>
+        <text class="ce__error" wx:if="{{errors.colorId}}">{{errors.colorId}}</text>
+        <text class="ce__counter" wx:else>{{selectedColorName}}</text>
+      </view>
+      <view class="ce__colors">
+        <view
+          wx:for="{{colors}}"
+          wx:key="id"
+          class="ce__color {{index === colorIndex ? 'is-selected' : ''}}"
+          style="background: {{item.bg}}; color: {{item.text}}; border-color: {{item.bar}};"
+          data-index="{{index}}"
+          bindtap="onSelectColor"
+          hover-class="jk-pressed"
+          hover-stay-time="60"
+          aria-role="radio"
+          aria-checked="{{index === colorIndex}}"
+          aria-label="{{item.name}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+
+    <view class="ce__field ce__field--last" id="field-note">
+      <view class="ce__field-head">
+        <text class="ce__label">备注</text>
+        <text class="ce__error" wx:if="{{errors.note}}">{{errors.note}}</text>
+        <text class="ce__counter" wx:else>{{noteLength}}/{{maxNote}}</text>
+      </view>
+      <textarea
+        class="ce__textarea {{errors.note ? 'is-error' : ''}}"
+        value="{{note}}"
+        maxlength="{{maxNote}}"
+        placeholder="选填，例如：需要带实验报告"
+        placeholder-class="ce__placeholder"
+        auto-height
+        bindinput="onNoteInput"
+        aria-label="备注"
+      />
+    </view>
+  </view>
+
+  <view class="ce__spacer"></view>
+
+  <view class="ce__bar">
+    <button
+      wx:if="{{isEdit}}"
+      class="ce__bar-btn u-button u-button--danger"
+      hover-class="jk-pressed"
+      bindtap="onDelete"
+    >
+      删除
+    </button>
+    <button
+      class="ce__bar-btn ce__bar-btn--main u-button u-button--primary"
+      hover-class="jk-pressed"
+      loading="{{saving}}"
+      disabled="{{saving}}"
+      bindtap="onSave"
+    >
+      {{saving ? '保存中' : '保存'}}
+    </button>
+  </view>
+
+  <toast id="toast" />
+</view>

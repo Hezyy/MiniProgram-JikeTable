@@ -1,0 +1,17 @@
+<view class="seg {{disabled ? 'seg--disabled' : ''}}">
+  <view
+    wx:for="{{options}}"
+    wx:key="value"
+    class="seg__item {{item.value === value ? 'is-active' : ''}}"
+    data-value="{{item.value}}"
+    bindtap="onSelect"
+    hover-class="seg__item--pressed"
+    hover-stay-time="60"
+    aria-role="button"
+    aria-label="{{item.label}}"
+    aria-selected="{{item.value === value}}"
+  >
+    <text class="seg__label">{{item.label}}</text>
+    <text class="seg__badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+  </view>
+</view>

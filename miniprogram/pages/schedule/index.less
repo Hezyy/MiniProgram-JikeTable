@@ -1,0 +1,112 @@
+@import '../../styles/variables.less';
+
+.sc {
+  padding-bottom: 200rpx;
+}
+
+.sc__head {
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+  margin-top: @space-md;
+}
+
+.sc__month {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: @space-xs;
+  min-height: 76rpx;
+  padding: 0 @space-lg;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1rpx solid var(--color-surface-border);
+  box-shadow: var(--shadow-soft);
+  transition: transform @duration-fast @ease-standard;
+}
+
+.sc__month-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  font-weight: 600;
+  color: var(--color-text);
+  .ellipsis();
+}
+
+.sc__meta {
+  margin-top: @space-xs;
+  padding: 0 @space-2xs;
+}
+
+.sc__meta-text {
+  font-size: 22rpx;
+  color: var(--color-text-tertiary);
+}
+
+.sc__groups {
+  margin-top: @space-md;
+  display: flex;
+  flex-direction: column;
+  gap: @space-lg;
+}
+
+.sc__group-head {
+  display: flex;
+  align-items: baseline;
+  gap: @space-xs;
+  margin-bottom: @space-xs;
+  padding-left: @space-2xs;
+}
+
+.sc__group-relative {
+  font-size: @font-body;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.sc__group-relative.is-today {
+  color: var(--color-primary);
+}
+
+.sc__group-full {
+  font-size: 22rpx;
+  color: var(--color-text-tertiary);
+}
+
+.sc__group-list {
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+}
+
+.sc__more {
+  display: flex;
+  justify-content: center;
+  padding: @space-sm 0 @space-lg;
+}
+
+.sc__more-btn {
+  min-width: 320rpx;
+  font-size: @font-caption;
+
+  &::after {
+    border: none;
+  }
+}
+
+.sc__fab {
+  position: fixed;
+  right: @space-xl;
+  bottom: calc(env(safe-area-inset-bottom) + 48rpx);
+  z-index: 30;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-strong);
+  box-shadow: 0 12rpx 32rpx rgba(38, 117, 236, 0.36);
+  transition: transform @duration-fast @ease-standard;
+}

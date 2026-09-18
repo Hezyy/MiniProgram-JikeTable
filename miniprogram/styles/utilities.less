@@ -1,0 +1,283 @@
+// 全局工具类与基础布局。
+// 仅在 app.less 中引入，作用于页面；自定义组件因样式隔离需自行定义样式。
+
+@import './variables.less';
+
+.page {
+  min-height: 100%;
+  padding: 0 @space-page;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.page--flush {
+  padding: 0;
+}
+
+.page--padded-bottom {
+  .safe-bottom(@space-2xl);
+}
+
+.page__scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+// ---------- 玻璃面板 ----------
+.glass-panel {
+  .glass-surface();
+  border-radius: var(--radius-lg);
+}
+
+.glass-panel--strong {
+  .glass-surface-strong();
+  border-radius: var(--radius-lg);
+}
+
+.glass-panel--flat {
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1rpx solid var(--color-surface-border);
+}
+
+// ---------- 交互反馈 ----------
+// 全站统一的按压态：由 hover-class="jk-pressed" 触发。
+// 过渡写在按下态里，因此任何可点击元素挂上该 class 即可获得动画，无需逐个改基础样式。
+.jk-pressed {
+  transform: scale(0.97);
+  opacity: 0.9;
+  transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+}
+
+.u-tap {
+  transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+}
+
+// ---------- 排版 ----------
+.u-title {
+  font-size: @font-title;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.u-heading {
+  font-size: @font-heading;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.u-body {
+  font-size: @font-body;
+  color: var(--color-text);
+}
+
+.u-caption {
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.u-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+.u-secondary {
+  color: var(--color-text-secondary);
+}
+
+.u-strong {
+  font-weight: 600;
+}
+
+.u-center {
+  text-align: center;
+}
+
+.u-ellipsis {
+  .ellipsis();
+}
+
+.u-clamp-2 {
+  .clamp(2);
+}
+
+.u-clamp-3 {
+  .clamp(3);
+}
+
+// ---------- 布局 ----------
+.u-row {
+  display: flex;
+  align-items: center;
+}
+
+.u-row--between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.u-row--top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.u-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.u-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.u-wrap {
+  flex-wrap: wrap;
+}
+
+.u-gap-xs {
+  gap: @space-xs;
+}
+
+.u-gap-sm {
+  gap: @space-sm;
+}
+
+.u-gap-md {
+  gap: @space-md;
+}
+
+.u-gap-lg {
+  gap: @space-lg;
+}
+
+// ---------- 分区标题 ----------
+.u-section {
+  margin-top: @space-lg;
+}
+
+.u-section__title {
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  margin-bottom: @space-sm;
+  padding-left: @space-2xs;
+}
+
+// ---------- 共享行式列表 ----------
+.u-list {
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1rpx solid var(--color-surface-border);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.u-list__row {
+  display: flex;
+  align-items: center;
+  min-height: @touch-size;
+  padding: @space-md @space-lg;
+  position: relative;
+  .tappable();
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: @space-lg;
+    right: 0;
+    bottom: 0;
+    height: 1rpx;
+    background: var(--color-border);
+    transform: scaleY(0.5);
+    transform-origin: bottom;
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+}
+
+.u-list__label {
+  flex: none;
+  color: var(--color-text);
+  margin-right: @space-md;
+}
+
+.u-list__value {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  color: var(--color-text-secondary);
+  .ellipsis();
+}
+
+.u-list__value--placeholder {
+  color: var(--color-text-tertiary);
+}
+
+// ---------- 按钮 ----------
+.u-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: @touch-size;
+  padding: 0 @space-xl;
+  border-radius: @radius-md;
+  font-size: @font-title;
+  font-weight: 600;
+  border: none;
+  line-height: 1.2;
+  transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+
+  &::after {
+    border: none;
+  }
+}
+
+.u-button--primary {
+  background: var(--color-primary-strong);
+  color: var(--color-on-strong);
+}
+
+.u-button--secondary {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.u-button--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1rpx solid var(--color-border-strong);
+}
+
+.u-button--danger {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.u-button--block {
+  width: 100%;
+}
+
+.u-button[disabled] {
+  opacity: 0.5;
+}
+
+// ---------- 杂项 ----------
+.u-divider {
+  height: 1rpx;
+  background: var(--color-border);
+}
+
+.u-safe-bottom {
+  .safe-bottom(@space-md);
+}
+
+.u-hidden {
+  display: none;
+}
+
+.u-scroll-hidden {
+  .hide-scrollbar();
+}

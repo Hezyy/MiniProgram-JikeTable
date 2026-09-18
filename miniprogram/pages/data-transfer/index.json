@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "数据导入与导出",
+  "usingComponents": {
+    "icon": "/components/icon/icon",
+    "toast": "/components/toast/toast"
+  }
+}

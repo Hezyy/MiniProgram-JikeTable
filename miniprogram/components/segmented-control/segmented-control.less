@@ -1,0 +1,59 @@
+@import '../../styles/variables.less';
+
+.seg {
+  display: flex;
+  align-items: stretch;
+  padding: @space-2xs;
+  border-radius: @radius-md;
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+}
+
+.seg--disabled {
+  opacity: 0.55;
+}
+
+.seg__item {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: @space-2xs;
+  min-height: 72rpx;
+  padding: 0 @space-xs;
+  border-radius: @radius-sm;
+  font-size: @font-body;
+  color: var(--color-text-secondary);
+  transition: background-color @duration-base @ease-standard, color @duration-base @ease-standard,
+    transform @duration-fast @ease-standard, box-shadow @duration-base @ease-standard;
+}
+
+.seg__item--pressed {
+  transform: scale(0.96);
+  opacity: 0.86;
+}
+
+.seg__item.is-active {
+  background: var(--color-surface-strong);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.seg__label {
+  .ellipsis();
+}
+
+.seg__badge {
+  min-width: 32rpx;
+  padding: 0 8rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  border-radius: @radius-pill;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 20rpx;
+  text-align: center;
+  flex: none;
+}

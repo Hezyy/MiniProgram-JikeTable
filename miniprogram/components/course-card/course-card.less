@@ -1,0 +1,89 @@
+@import '../../styles/variables.less';
+
+.press-class();
+
+// 一页流布局下，每天只有约 95rpx 宽，因此留白与字号都按窄列设计。
+.cc {
+  position: absolute;
+  overflow: hidden;
+  border-radius: @radius-xs;
+  border-left: 6rpx solid transparent;
+  padding: 4rpx;
+  transition: transform @duration-fast @ease-standard, opacity @duration-fast @ease-standard;
+}
+
+.cc.is-finished {
+  opacity: 0.5;
+}
+
+.cc.is-ongoing {
+  box-shadow: inset 0 0 0 2rpx var(--color-primary);
+}
+
+// 冲突时用危险色左边条覆盖课程色，即使窄到只剩色条也能看出冲突
+.cc.is-conflict {
+  border-left-color: var(--color-danger-strong) !important;
+}
+
+// 并排冲突导致列更窄时的精简形态
+.cc.is-narrow {
+  border-left-width: 4rpx;
+  padding: 2rpx;
+}
+
+.cc__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rpx;
+  height: 100%;
+  overflow: hidden;
+}
+
+// 为右下角状态角标预留空间，避免压住课程名或地点
+.cc__inner--flagged {
+  padding-bottom: 28rpx;
+}
+
+.cc__name {
+  font-size: 20rpx;
+  font-weight: 600;
+  line-height: 1.25;
+  .clamp(4);
+  word-break: break-all;
+}
+
+.cc.is-narrow .cc__name {
+  font-size: 16rpx;
+  line-height: 1.2;
+  .clamp(6);
+}
+
+// 窄列下地点与教师改为折行显示，比截断更有信息量
+.cc__loc,
+.cc__teacher {
+  font-size: 17rpx;
+  line-height: 1.25;
+  opacity: 0.82;
+  .clamp(2);
+  word-break: break-all;
+}
+
+.cc__flag {
+  position: absolute;
+  right: 3rpx;
+  bottom: 3rpx;
+  padding: 0 6rpx;
+  border-radius: @radius-pill;
+  font-size: 16rpx;
+  line-height: 1.7;
+}
+
+.cc__flag--live {
+  background: var(--color-primary-strong);
+  color: var(--color-on-strong);
+}
+
+.cc__flag--conflict {
+  background: var(--color-danger-strong);
+  color: var(--color-on-strong);
+}

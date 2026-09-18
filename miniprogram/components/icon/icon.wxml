@@ -1,0 +1,6 @@
+<view
+  class="{{className}}"
+  style="width: {{size}}rpx; height: {{size}}rpx;"
+  aria-hidden="{{ariaHidden}}"
+  aria-label="{{label}}"
+></view>

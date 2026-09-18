@@ -1,0 +1,26 @@
+<view class="sheet" wx:if="{{show}}">
+  <view class="sheet__mask" bindtap="onMaskTap" catchtouchmove="noop"></view>
+  <view class="sheet__panel" catchtap="noop">
+    <view class="sheet__grabber"></view>
+    <view class="sheet__head" wx:if="{{title}}">
+      <text class="sheet__title">{{title}}</text>
+      <view
+        wx:if="{{showClose}}"
+        class="sheet__close"
+        hover-class="jk-pressed"
+        hover-stay-time="80"
+        bindtap="onCloseTap"
+        aria-role="button"
+        aria-label="关闭"
+      >
+        <icon name="close" size="34" tone="default" />
+      </view>
+    </view>
+    <scroll-view scroll-y class="sheet__body" enhanced show-scrollbar="{{false}}">
+      <slot></slot>
+    </scroll-view>
+    <view class="sheet__footer">
+      <slot name="footer"></slot>
+    </view>
+  </view>
+</view>

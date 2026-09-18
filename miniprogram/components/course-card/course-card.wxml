@@ -1,0 +1,17 @@
+<view
+  class="cc {{block.isFinished ? 'is-finished' : ''}} {{block.isOngoing ? 'is-ongoing' : ''}} {{block.conflict ? 'is-conflict' : ''}} {{narrow ? 'is-narrow' : ''}}"
+  style="top: {{block.top}}rpx; height: {{block.height}}rpx; left: {{block.leftPercent}}%; width: {{block.widthPercent}}%; background: {{color.bg}}; color: {{color.text}}; border-left-color: {{color.bar}};"
+  hover-class="jk-pressed"
+  hover-stay-time="80"
+  bindtap="onTap"
+  aria-role="button"
+  aria-label="{{ariaLabel}}"
+>
+  <view class="cc__inner {{showFlag ? 'cc__inner--flagged' : ''}}">
+    <text class="cc__name">{{block.name}}</text>
+    <text class="cc__loc" wx:if="{{roomy && block.location}}">{{block.location}}</text>
+    <text class="cc__teacher" wx:if="{{roomy && block.teacher}}">{{block.teacher}}</text>
+  </view>
+  <view class="cc__flag cc__flag--live" wx:if="{{showFlag && block.isOngoing}}">进行中</view>
+  <view class="cc__flag cc__flag--conflict" wx:elif="{{showFlag && block.conflict}}">冲突</view>
+</view>

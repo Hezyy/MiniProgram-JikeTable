@@ -1,0 +1,164 @@
+@import '../../styles/variables.less';
+
+// 数据导入与导出页。
+
+.transfer {
+  display: flex;
+  flex-direction: column;
+  padding-top: @space-lg;
+  .safe-bottom(@space-2xl);
+}
+
+// ---------- 顶部说明 ----------
+
+.transfer__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: @space-sm;
+  padding: @space-lg;
+}
+
+.transfer__notice-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+// ---------- 卡片 ----------
+
+.transfer__card {
+  padding: @space-lg;
+}
+
+.transfer__hint {
+  display: block;
+  margin-top: @space-sm;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.transfer__card > .transfer__hint:first-child {
+  margin-top: 0;
+}
+
+.transfer__button {
+  margin-top: @space-sm;
+}
+
+// ---------- 统计 ----------
+
+.transfer__stats {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: @space-md;
+}
+
+.transfer__stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64rpx;
+}
+
+.transfer__stat-label {
+  flex: none;
+  margin-right: @space-md;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.transfer__stat-value {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-size: @font-body;
+  font-weight: 500;
+  color: var(--color-text);
+  .ellipsis();
+}
+
+// ---------- 导入输入 ----------
+
+.transfer__textarea {
+  width: 100%;
+  min-height: 240rpx;
+  margin-top: @space-sm;
+  padding: @space-md;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-soft);
+  border: 1rpx solid var(--color-border);
+  font-size: @font-body;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.transfer__placeholder {
+  color: var(--color-text-tertiary);
+  font-size: @font-body;
+}
+
+.transfer__actions {
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+  margin-top: @space-md;
+}
+
+.transfer__action {
+  width: 100%;
+  font-size: @font-body;
+}
+
+// ---------- 校验结果 ----------
+
+.transfer__result {
+  margin-top: @space-lg;
+  padding-top: @space-lg;
+  border-top: 1rpx solid var(--color-border);
+}
+
+.transfer__result-head {
+  display: flex;
+  align-items: center;
+  gap: @space-xs;
+}
+
+.transfer__result-msg {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+}
+
+.transfer__result-msg--ok {
+  color: var(--color-success);
+}
+
+.transfer__result-msg--error {
+  color: var(--color-danger);
+}
+
+.transfer__issues {
+  display: flex;
+  flex-direction: column;
+  gap: @space-2xs;
+  margin-top: @space-md;
+}
+
+.transfer__issues-title {
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.transfer__issue {
+  font-size: @font-caption;
+  color: var(--color-warning);
+  line-height: 1.6;
+}
+
+// 小程序 button 默认带一层边框伪元素，使用工具类按钮时需清除。
+button::after {
+  border: none;
+}

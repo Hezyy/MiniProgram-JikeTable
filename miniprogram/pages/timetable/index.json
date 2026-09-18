@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "课表",
+  "usingComponents": {
+    "course-card": "/components/course-card/course-card",
+    "empty-state": "/components/empty-state/empty-state",
+    "bottom-sheet": "/components/bottom-sheet/bottom-sheet",
+    "toast": "/components/toast/toast",
+    "icon": "/components/icon/icon"
+  }
+}

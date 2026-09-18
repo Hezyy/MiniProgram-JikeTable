@@ -1,0 +1,350 @@
+@import '../../styles/variables.less';
+
+/**
+ * 课表页采用「一页流」布局：
+ * - 星期一至星期日 7 列全部在屏幕内，任何情况下都不横向滚动；
+ * - 首列（节次与时间）宽度固定，其余 7 列由 Flex 均分；
+ * - 只有纵向滚动，工具栏与星期标题吸附在顶部。
+ */
+
+/** 首列宽度：需要容纳「12」与「08:00」两行小字。 */
+@time-col-width: 64rpx;
+/** 网格左右内缩，避免课程块贴在屏幕边缘。 */
+@grid-inset: 8rpx;
+
+.tt {
+  padding-bottom: @space-lg;
+}
+
+// ---------- 吸附在顶部的工具栏 + 星期标题 ----------
+.tt__sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: @space-sm @grid-inset 0;
+  background: var(--color-bg);
+}
+
+.tt__toolbar {
+  margin: 0 @space-md;
+  .glass-surface();
+  border-radius: var(--radius-lg);
+  padding: @space-sm @space-md;
+}
+
+.tt__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: @space-xs;
+}
+
+.tt__arrow {
+  width: @touch-size;
+  height: @touch-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: @radius-sm;
+  flex: none;
+  .tappable();
+}
+
+.tt__arrow.is-disabled {
+  opacity: 0.35;
+}
+
+.tt__title-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rpx;
+}
+
+.tt__title {
+  font-size: @font-title;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tt__range {
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.tt__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: @space-sm;
+  margin-top: @space-xs;
+  padding-top: @space-xs;
+  border-top: 1rpx solid var(--color-border);
+}
+
+.tt__back {
+  min-height: 64rpx;
+  padding: 0 @space-md;
+  display: flex;
+  align-items: center;
+  border-radius: @radius-sm;
+  background: var(--color-bg-soft);
+  color: var(--color-text-secondary);
+  font-size: @font-caption;
+  .tappable();
+}
+
+.tt__back.is-disabled {
+  opacity: 0.45;
+}
+
+.tt__add {
+  min-height: 64rpx;
+  padding: 0 @space-md;
+  display: flex;
+  align-items: center;
+  gap: @space-2xs;
+  border-radius: @radius-sm;
+  background: var(--color-primary-strong);
+  color: var(--color-on-strong);
+  font-size: @font-caption;
+  font-weight: 600;
+  .tappable();
+}
+
+.tt__add-text {
+  color: var(--color-on-strong);
+  font-size: @font-caption;
+}
+
+.tt__notice {
+  display: flex;
+  align-items: center;
+  gap: @space-xs;
+  margin: @space-xs 0 0;
+  padding: @space-xs @space-md;
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-soft);
+}
+
+.tt__notice-text {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-caption;
+  color: var(--color-danger);
+}
+
+// ---------- 星期标题 ----------
+.tt__head-row {
+  display: flex;
+  align-items: stretch;
+  height: 88rpx;
+  margin-top: @space-xs;
+  border-bottom: 1rpx solid var(--color-border);
+}
+
+.tt__corner {
+  flex: none;
+  width: @time-col-width;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: @space-xs;
+}
+
+.tt__corner-text {
+  font-size: 20rpx;
+  color: var(--color-text-tertiary);
+}
+
+.tt__head-cell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rpx;
+  border-left: 1rpx solid var(--color-border);
+}
+
+.tt__head-label {
+  font-size: 22rpx;
+  line-height: 1.2;
+  color: var(--color-text-secondary);
+}
+
+.tt__head-date {
+  font-size: 19rpx;
+  line-height: 1.2;
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.tt__head-cell.is-today .tt__head-label,
+.tt__head-cell.is-today .tt__head-date {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+// ---------- 网格主体 ----------
+.tt__grid {
+  padding: 0 @grid-inset;
+}
+
+.tt__body {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.tt__lines {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tt__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1rpx;
+  background: var(--color-border);
+  transform: scaleY(0.5);
+}
+
+.tt__line.is-break {
+  background: var(--color-border-strong);
+}
+
+.tt__time-col {
+  position: relative;
+  flex: none;
+  width: @time-col-width;
+  z-index: 1;
+}
+
+.tt__row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.tt__row-no {
+  font-size: 22rpx;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.tt__row-time {
+  font-size: 17rpx;
+  line-height: 1.35;
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.tt__row-break {
+  font-size: 17rpx;
+  color: var(--color-text-tertiary);
+}
+
+.tt__day {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  border-left: 1rpx solid var(--color-border);
+  z-index: 1;
+}
+
+.tt__day.is-today {
+  background: var(--color-primary-soft);
+}
+
+.tt__now {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2rpx;
+  background: var(--color-danger);
+  z-index: 3;
+}
+
+.tt__now::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -4rpx;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: var(--color-danger);
+}
+
+// ---------- 课程详情弹层内容 ----------
+.cdetail {
+  display: flex;
+  flex-direction: column;
+  gap: @space-sm;
+  padding-bottom: @space-md;
+}
+
+.cdetail__color {
+  padding: @space-md @space-lg;
+  border-radius: var(--radius-md);
+  border-left: 8rpx solid transparent;
+  font-size: @font-title;
+  font-weight: 600;
+  .clamp(2);
+}
+
+.cdetail__row {
+  display: flex;
+  align-items: flex-start;
+  gap: @space-md;
+  padding: @space-2xs 0;
+}
+
+.cdetail__label {
+  flex: none;
+  width: 96rpx;
+  font-size: @font-caption;
+  color: var(--color-text-secondary);
+}
+
+.cdetail__value {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  color: var(--color-text);
+  word-break: break-all;
+}
+
+.cdetail__footer {
+  display: flex;
+  align-items: center;
+  gap: @space-sm;
+}
+
+.cdetail__btn {
+  flex: 1;
+  min-width: 0;
+  font-size: @font-body;
+  margin: 0;
+
+  &::after {
+    border: none;
+  }
+}

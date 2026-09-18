@@ -1,0 +1,124 @@
+<view class="page {{themeClass}}">
+  <view class="transfer">
+    <view class="glass-panel transfer__notice">
+      <icon name="warning" size="36" tone="primary" />
+      <text class="transfer__notice-text">导出的内容包含你的学期、课程与私人日程，请妥善保管，不要随意分享给他人。</text>
+    </view>
+
+    <!-- 导出 -->
+    <view class="u-section">
+      <view class="u-section__title">导出</view>
+      <view class="glass-panel transfer__card">
+        <view class="transfer__stats">
+          <view class="transfer__stat" wx:for="{{exportRows}}" wx:key="label">
+            <text class="transfer__stat-label">{{item.label}}</text>
+            <text class="transfer__stat-value">{{item.value}}</text>
+          </view>
+        </view>
+
+        <button
+          class="u-button u-button--primary u-button--block"
+          hover-class="jk-pressed"
+          hover-stay-time="80"
+          disabled="{{busy}}"
+          bindtap="onCopy"
+          aria-label="复制数据到剪贴板"
+        >
+          复制数据到剪贴板
+        </button>
+        <button
+          class="u-button u-button--secondary u-button--block transfer__button"
+          hover-class="jk-pressed"
+          hover-stay-time="80"
+          disabled="{{busy}}"
+          bindtap="onSaveFile"
+          aria-label="保存为文件"
+        >
+          保存为文件
+        </button>
+
+        <text class="transfer__hint">
+          复制的文本可以直接粘贴到聊天窗口保存；保存为文件在电脑端会写入磁盘，手机端会转发到聊天。
+        </text>
+      </view>
+    </view>
+
+    <!-- 导入 -->
+    <view class="u-section">
+      <view class="u-section__title">导入</view>
+      <view class="glass-panel transfer__card">
+        <text class="transfer__hint">导入前会先校验内容，校验不通过不会改动现有数据。</text>
+
+        <textarea
+          class="transfer__textarea"
+          value="{{inputText}}"
+          placeholder="粘贴导出的 JSON 文本"
+          placeholder-class="transfer__placeholder"
+          maxlength="-1"
+          bindinput="onInput"
+          aria-label="待导入的 JSON 文本"
+        ></textarea>
+
+        <view class="transfer__actions">
+          <button
+            class="u-button u-button--primary transfer__action"
+            hover-class="jk-pressed"
+            hover-stay-time="80"
+            bindtap="onParse"
+            aria-label="粘贴并校验"
+          >
+            粘贴并校验
+          </button>
+          <button
+            class="u-button u-button--ghost transfer__action"
+            hover-class="jk-pressed"
+            hover-stay-time="80"
+            disabled="{{picking}}"
+            bindtap="onPickFile"
+            aria-label="从聊天记录选择文件"
+          >
+            {{picking ? '正在读取…' : '从聊天记录选择文件'}}
+          </button>
+        </view>
+
+        <view class="transfer__result" wx:if="{{hasPreview}}">
+          <view class="transfer__result-head">
+            <icon
+              name="{{previewOk ? 'check' : 'warning'}}"
+              size="32"
+              tone="{{previewOk ? 'success' : 'danger'}}"
+            />
+            <text class="transfer__result-msg {{previewOk ? 'transfer__result-msg--ok' : 'transfer__result-msg--error'}}">
+              {{previewMessage}}
+            </text>
+          </view>
+
+          <view class="transfer__stats" wx:if="{{previewOk}}">
+            <view class="transfer__stat" wx:for="{{previewRows}}" wx:key="label">
+              <text class="transfer__stat-label">{{item.label}}</text>
+              <text class="transfer__stat-value">{{item.value}}</text>
+            </view>
+          </view>
+
+          <view class="transfer__issues" wx:if="{{previewIssues.length > 0}}">
+            <text class="transfer__issues-title">以下条目已被自动调整</text>
+            <text class="transfer__issue" wx:for="{{previewIssues}}" wx:key="*this">{{item}}</text>
+          </view>
+
+          <button
+            wx:if="{{previewOk}}"
+            class="u-button u-button--danger u-button--block transfer__button"
+            hover-class="jk-pressed"
+            hover-stay-time="80"
+            bindtap="onConfirmImport"
+            aria-label="确认覆盖本地数据"
+          >
+            确认覆盖本地数据
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <toast id="toast" />
+</view>
